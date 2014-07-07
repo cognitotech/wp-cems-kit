@@ -1,0 +1,15 @@
+{
+    "name": "siliconstraits/wordpress-cems-kit",
+    "description": "A plugin for CEMS talking nicely with Wordpress",
+    "minimum-stability": "stable",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Hai Phan Nguyen",
+            "email": "pnghai@gmail.com"
+        }
+    ],
+    "require": {
+        "siliconstraits/cems-php-sdk": "dev-master"
+    }
+}
