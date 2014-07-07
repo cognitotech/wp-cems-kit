@@ -1,0 +1,3 @@
+[submodule "wpdk-production"]
+	path = wpdk-production
+	url = git@github.com:wpXtreme/wpdk.git
