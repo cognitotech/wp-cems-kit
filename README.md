@@ -10,9 +10,9 @@ This is the official Wordpress plugin handle the conversation between the custom
 
 ### Requirements
 
-1.  PHP >= 5.4
+1.  PHP &gt;= 5.4
 2.  PHP curl extensions.
-3.  Wordpress >= 3.7
+3.  Wordpress &gt;= 3.4
 
 ### Installation
 

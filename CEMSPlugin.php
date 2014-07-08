@@ -5,42 +5,119 @@
 * Version: 1.0.0
 * Author: Hai Phan Nguyen
 * Author URI: http://siliconstraits.com
+* Text Domain:     wp-cems-kit
 */
-<?
+<?php
 
+// Include WPDK framework
 require_once(  dirname( __FILE__ ) . '/wpdk-production/wpdk.php' );
+
+// Include CEMS-PHP-SDK
 require_once( dirname( __FILE__ ) . '/vendor/autoload.php');
+
 // Define of include your main plugin class
 if( !class_exists( 'CEMSPlugin' ) )
 {
 
     /**
-     * Class CEMSPlugin
+     * CEMSPlugin is the main class of this plugin, and extends WPDKWordPressPlugin
+     *
+     * @class              CEMSPlugin
+     * @author             pnghai <nguyenhai@siliconstraits.vn>
+     * @copyright          Copyright (C) 2014-2015 Silicon Straits. All Rights Reserved.
+     * @date               2014-07-15
+     * @version            1.0.0
+     *
      */
-    class CEMSPlugin extends WPDKWordPressPlugin {
+    final class CEMSPlugin extends WPDKWordPressPlugin {
 
         /**
          * Create an instance of CEMSPlugin class
+         *
+         * @brief Construct
+         *
+         * @param string $file The main file of this plugin. Usually __FILE__
+         *
+         * @return CEMSPlugin object instance
          */
-        public function __construct( ) {
+        public function __construct($file)
+        {
 
-            parent::__construct( );
+            parent::__construct( $file );
+
+            // Build my own internal defines
             $this->defines();
+
+            // Build environment of plugin autoload of internal classes - this is ALWAYS the first thing to do
+            $this->registerClasses();
         }
 
-        // Include you own defines
+        /**
+         * Register all autoload classes
+         *
+         * @brief Autoload classes
+         */
+        private function registerClasses()
+        {
+
+            $includes = array(
+                $this->classesPath . 'admin/cems-plugin-admin.php' => 'CEMSPluginAdmin',
+                $this->classesPath . 'preferences/cems-plugin-preferences.php' => 'CEMSPluginPreferencesModel',
+                $this->classesPath . 'preferences/cems-plugin-preferences-viewcontroller.php' => 'CEMSPluginPreferencesViewController',
+                $this->classesPath . 'other/about-viewcontroller.php' => 'AboutViewController',
+                $this->classesPath . 'ajax/cems-plugin-ajax-handler.php' => 'CEMSPluginAjaxHandler'
+            );
+
+            $this->registerAutoloadClass( $includes );
+
+        }
+
+        /**
+         * Include the external defines file
+         *
+         * @brief Defines
+         */
         private function defines()
         {
             include_once( 'defines.php' );
         }
 
-        // Called when the plugin is activate - only first time
+        /**
+         * Catch for activation. This method is called one shot.
+         *
+         * @brief Activation
+         */
         public function activation()
         {
-            // To override
+            // When you update your plugin it is re-activate. In this place you can update your preferences
+            CEMSPluginPreferencesModel::init()->delta();
         }
 
-        // Called when the plugin is deactivated
+        /**
+         * Catch for admin
+         *
+         * @brief Admin backend
+         */
+        public function admin()
+        {
+            CEMSPluginAdmin::init( $this );
+        }
+
+        /**
+         * Init your own preferences settings
+         *
+         * @brief Preferences
+         */
+        public function preferences()
+        {
+            CEMSPluginPreferencesModel::init();
+        }
+
+        /**
+         * Catch for deactivation. This method is called when the plugin is deactivate.
+         *
+         * @brief Deactivation
+         */
         public function deactivation()
         {
             // To override
@@ -50,12 +127,7 @@ if( !class_exists( 'CEMSPlugin' ) )
         public function loaded()
         {
             // To override
-        }
-
-        // Called when the plugin is fully loaded
-        public function preferences()
-        {
-            // To override
+            CEMSPreviewEbookShortcode::init();
         }
 
         // Called only if the web request is related to the front-end side of WordPress
@@ -64,12 +136,16 @@ if( !class_exists( 'CEMSPlugin' ) )
             // To override
         }
 
-        // Called only if the web request is related to the admin side of WordPress
-        public function admin()
+        /**
+         * Catch for ajax
+         *
+         * @brief Ajax
+         */
+        public function ajax()
         {
-            // To override
+            // For example
+            CEMSPluginAjaxHandler::init();
         }
-
     }
 }
-$GLOBALS['CEMSPlugin'] = new CEMSPlugin();
+$GLOBALS['CEMSPlugin'] = new CEMSPlugin(__FILE__);
