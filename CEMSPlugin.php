@@ -1,13 +1,14 @@
+<?php
 /**
 * Plugin Name: Wordpress CEMS Kit
 * Plugin URI: http://siliconstraits.com
-* Description: Worpress CEMS Kit plugin with full WPDK support
+* Description: Wordpress CEMS Kit plugin with full WPDK support
 * Version: 1.0.0
 * Author: Hai Phan Nguyen
 * Author URI: http://siliconstraits.com
 * Text Domain:     wp-cems-kit
+* License: MIT License
 */
-<?php
 
 // Include WPDK framework
 require_once(  dirname( __FILE__ ) . '/wpdk-production/wpdk.php' );
@@ -70,7 +71,8 @@ if( !class_exists( 'CEMSPlugin' ) )
 
             // Build environment of plugin autoload of internal classes - this is ALWAYS the first thing to do
             $this->registerClasses();
-
+            // Register shortcode
+            add_action( 'wp_loaded', array( 'CEMSPreviewEbookShortcode', 'init' ) );
         }
 
         /**
@@ -120,7 +122,7 @@ if( !class_exists( 'CEMSPlugin' ) )
         public function activation()
         {
             // When you update your plugin it is re-activate. In this place you can update your preferences
-            CEMSPluginPreferencesModel::init()->delta();
+            CEMSPluginPreferences::init()->delta();
         }
 
         /**
@@ -157,13 +159,14 @@ if( !class_exists( 'CEMSPlugin' ) )
         public function loaded()
         {
             // To override
-            CEMSPreviewEbookShortcode::init();
+            //CEMSPreviewEbookShortcode::init();
         }
 
         // Called only if the web request is related to the front-end side of WordPress
         public function theme()
         {
             // To override
+            CEMSPluginTheme::init();
         }
 
         /**

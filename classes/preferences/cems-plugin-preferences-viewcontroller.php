@@ -48,7 +48,7 @@ class CEMSPluginPreferencesViewController extends WPDKPreferencesViewController
             new WPDKjQueryTab($layout_view->id, __('Custom CSS Layout',WPCEMS_TEXTDOMAIN), $layout_view->html()),
         );
 
-        parent::__construct(CEMSPluginPreferencesModel::init(), __('Preferences',WPCEMS_TEXTDOMAIN), $tabs);
+        parent::__construct(CEMSPluginPreferences::init(), __('Preferences',WPCEMS_TEXTDOMAIN), $tabs);
 
     }
 
@@ -125,8 +125,10 @@ class CEMSPreferencesGeneralView extends WPDKPreferencesView
                         'placeholder' => __('Nhập CEMS API url', WPCEMS_TEXTDOMAIN ),
                         'title'       => __('CEMS API Url có dạng http://v3.cems.vn', WPCEMS_TEXTDOMAIN ),
                         'value' => $general->api_url
-                    ),
+                    )
+                ),
 
+                array(
                     array(
                         'type'  => WPDKUIControlType::TEXT,
                         'name'  => CEMSPreferencesGeneralBranch::API_ACCESS_TOKEN,
@@ -134,8 +136,10 @@ class CEMSPreferencesGeneralView extends WPDKPreferencesView
                         'placeholder' => __('Nhập Access Token', WPCEMS_TEXTDOMAIN ),
                         'title'       => __('Access Token được cấp để truy xuất API từ CEMS', WPCEMS_TEXTDOMAIN ),
                         'value' => $general->api_token
-                    ),
+                    )
+                ),
 
+                array(
                     array(
                         'type'  => WPDKUIControlType::EMAIL,
                         'name'  => CEMSPreferencesGeneralBranch::API_EMAIL,
@@ -143,8 +147,10 @@ class CEMSPreferencesGeneralView extends WPDKPreferencesView
                         'placeholder' => __('Nhập email đăng nhập vào CEMS', WPCEMS_TEXTDOMAIN ),
                         'title'       => __('CEMS Email', WPCEMS_TEXTDOMAIN ),
                         'value' => ''
-                    ),
+                    )
+                ),
 
+                array(
                     array(
                         'type'  => WPDKUIControlType::PASSWORD,
                         'name'  => CEMSPreferencesGeneralBranch::API_PASSWORD,

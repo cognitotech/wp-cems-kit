@@ -119,17 +119,24 @@ class CEMSPreferencesGeneralBranch extends WPDKPreferencesBranch
     {
         // Update and sanitize from post data
 
-        $this->api_url = esc_attr($_POST[self::API_URL]);
-        if (isset($_POST[self::API_ACCESS_TOKEN])) {
-            $this->api_token = esc_attr($_POST[self::API_ACCESS_TOKEN]);
-        } else {
-            if ((isset($_POST[self::API_EMAIL])) && (isset($_POST[self::API_PASSWORD]))) {
-                $email = esc_attr($_POST[self::API_EMAIL]);
-                $pass = esc_attr($_POST[self::API_PASSWORD]);
-                $client = new CEMS\Client($email, $pass, $this->api_token);
-                $this->api_token=$client->getAccessToken();
+        $this->api_url = $_POST[self::API_URL];
+        if ((strlen($_POST[self::API_EMAIL])>0) && (strlen($_POST[self::API_PASSWORD])>0)) {
+            $email = $_POST[self::API_EMAIL];
+            $pass = $_POST[self::API_PASSWORD];
+
+            try {
+            $client = new CEMS\Client($email, $pass, $this->api_url);
             }
+            catch (CEMS\Error $e) {
+                wp_die($e.' '.$this->api_url.' '.$email.' '.$pass);
+            }
+            if (isset($client))
+                $this->api_token=$client->getAccessToken();
         }
+        else
+            if (isset($_POST[self::API_ACCESS_TOKEN])) {
+                $this->api_token = esc_attr($_POST[self::API_ACCESS_TOKEN]);
+            }
     }
 
 }

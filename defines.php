@@ -14,7 +14,7 @@
 * @var CEMSPlugin $this
 */
 define( 'WPCEMS_VERSION', $this->version );
-define( 'WPCEMS_LOGO', $this->imagesURL . 'sss-logo.png');
+define( 'WPCEMS_LOGO', $this->imagesURL . 'sss-logo-16x16.png');
 
 define( 'WPCEMS_TEXTDOMAIN', $this->textDomain );
 define( 'WPCEMS_TEXTDOMAIN_PATH', $this->textDomainPath );

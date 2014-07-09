@@ -1,6 +1,7 @@
 <?php
 /**
 * CEMS Preview E-book Shortcode
+* [cems_preview_ebook list_id=-1 book_title='']
 *
 * @class              CEMSPreviewEbookShortcode
 * @author             pnghai <nguyenhai@siliconstraits.vn>
@@ -58,7 +59,8 @@ class CEMSPreviewEbookShortcode extends WPDKShortcode {
      * Display the preview button with its full function
      *
      *     $defaults = array(
-     *      'list_id'          => -1,
+     *      'list_id' => -1,
+     *      'book_title' => '',
      *     );
      *
      * @brief Display the preview button
