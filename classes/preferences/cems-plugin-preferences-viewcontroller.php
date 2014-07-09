@@ -64,8 +64,8 @@ class CEMSPluginPreferencesViewController extends WPDKPreferencesViewController
         WPDKUIComponents::init()->enqueue(WPDKUIComponents::CONTROLS, WPDKUIComponents::TOOLTIP);
 
         // Enqueue your own styles and scripts
-        wp_enqueue_script( 'wpcems-preferences', WPCEMS_URL_JAVASCRIPT . 'wpcems-preferences.js', array( 'jquery' ), WPCEMS_VERSION, true );
-        wp_enqueue_style( 'wpcems-preferences', WPCEMS_URL_CSS . 'wpcems-preferences.css', array(), WPCEMS_VERSION );
+        wp_enqueue_script( 'wpcems-preferences', WPCEMS_URL_JAVASCRIPT . 'cems-preferences.js', array( 'jquery' ), WPCEMS_VERSION, true );
+        wp_enqueue_style( 'wpcems-preferences', WPCEMS_URL_CSS . 'cems-preferences.css', array(), WPCEMS_VERSION );
     }
 
 }
