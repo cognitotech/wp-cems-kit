@@ -80,7 +80,7 @@ class CEMSPluginAdmin extends WPDKWordPressAdmin {
             'wp_cems_plugin' => array(
 
                 // Menu title shown as first entry in main navigation menu
-                'menuTitle'  => __( 'CEMS V3 Toolkit' ),
+                'menuTitle'  => __( 'CEMS V3 Toolkit',WPCEMS_TEXTDOMAIN),
 
                 // WordPress capability needed to see this menu - if current WordPress user does not have this capability, the menu will be hidden
                 'capability' => self::MENU_CAPABILITY,
@@ -92,8 +92,8 @@ class CEMSPluginAdmin extends WPDKWordPressAdmin {
                 'subMenus'   => array(
 
                     array(
-                        'menuTitle'      => __( 'Show Controls' ), // Menu item shown as first sub-menu in main navigation menu
-                        'pageTitle'      => __( 'CEMS Toolkit Configuration' ),  // The web page title shown when this item is clicked
+                        'menuTitle'      => __( 'General Settings',WPCEMS_TEXTDOMAIN ), // Menu item shown as first sub-menu in main navigation menu
+                        'pageTitle'      => __( 'CEMS Toolkit Configuration',WPCEMS_TEXTDOMAIN ),  // The web page title shown when this item is clicked
 
                         // WordPress capability needed to see this menu item - if current WordPress user does not have this capability, this menu item will be hidden
                         'capability'     => self::MENU_CAPABILITY,
@@ -104,8 +104,8 @@ class CEMSPluginAdmin extends WPDKWordPressAdmin {
                     WPDKSubMenuDivider::DIVIDER,
 
                     array(
-                        'menuTitle'      => __( 'About' ),
-                        'pageTitle'      => __( 'About CEMS Toolkit' ),
+                        'menuTitle'      => __( 'About',WPCEMS_TEXTDOMAIN ),
+                        'pageTitle'      => __( 'About CEMS Toolkit',WPCEMS_TEXTDOMAIN ),
                         'viewController' => 'AboutViewController',
                     ),
                 )

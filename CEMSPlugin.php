@@ -32,6 +32,26 @@ if( !class_exists( 'CEMSPlugin' ) )
     final class CEMSPlugin extends WPDKWordPressPlugin {
 
         /**
+         * Create and return a singleton instance of CEMSPlugin class
+         *
+         * @brief Init
+         *
+         * @param string $file The main file of this plugin. Usually __FILE__ (main.php)
+         *
+         * @return CEMSPlugin
+         */
+        public static function boot( $file = null )
+        {
+            static $instance = null;
+            if ( is_null( $instance ) ) {
+                $instance = new self( $file );
+                do_action( __CLASS__ );
+            }
+
+            return $instance;
+        }
+
+        /**
          * Create an instance of CEMSPlugin class
          *
          * @brief Construct
@@ -50,6 +70,7 @@ if( !class_exists( 'CEMSPlugin' ) )
 
             // Build environment of plugin autoload of internal classes - this is ALWAYS the first thing to do
             $this->registerClasses();
+
         }
 
         /**
@@ -62,10 +83,19 @@ if( !class_exists( 'CEMSPlugin' ) )
 
             $includes = array(
                 $this->classesPath . 'admin/cems-plugin-admin.php' => 'CEMSPluginAdmin',
-                $this->classesPath . 'preferences/cems-plugin-preferences.php' => 'CEMSPluginPreferencesModel',
-                $this->classesPath . 'preferences/cems-plugin-preferences-viewcontroller.php' => 'CEMSPluginPreferencesViewController',
+                $this->classesPath . 'ajax/cems-plugin-ajax-handler.php' => 'CEMSPluginAjaxHandler',
+                $this->classesPath . 'core/cems-preview-ebook.php' => 'CEMSPreviewEbook',
+                $this->classesPath . 'preferences/cems-plugin-preferences.php' => array(
+                    'CEMSPluginPreferences',
+                    'CEMSPreferencesGeneralBranch',
+                    'CEMSPreferencesLayoutBranch'),
+                $this->classesPath . 'preferences/cems-plugin-preferences-viewcontroller.php' => array(
+                    'CEMSPluginPreferencesViewController',
+                    'CEMSPreferencesGeneralView',
+                    'CEMSPreferencesLayoutView'),
                 $this->classesPath . 'other/about-viewcontroller.php' => 'AboutViewController',
-                $this->classesPath . 'ajax/cems-plugin-ajax-handler.php' => 'CEMSPluginAjaxHandler'
+                $this->classesPath . 'shortcodes/cems-preview-ebook-shortcode.php' => 'CEMSPreviewEbookShortcode',
+                $this->classesPath . 'theme/cems-plugin-theme.php' => 'CEMSPluginTheme'
             );
 
             $this->registerAutoloadClass( $includes );
@@ -110,7 +140,7 @@ if( !class_exists( 'CEMSPlugin' ) )
          */
         public function preferences()
         {
-            CEMSPluginPreferencesModel::init();
+            CEMSPluginPreferences::init();
         }
 
         /**
@@ -148,4 +178,17 @@ if( !class_exists( 'CEMSPlugin' ) )
         }
     }
 }
-$GLOBALS['CEMSPlugin'] = new CEMSPlugin(__FILE__);
+
+$GLOBALS['CEMSPlugin'] = CEMSPlugin::boot(__FILE__);
+/*
+ * TODO: Setup front end Bootstrap button via shortcode
+ *
+ * TODO: Setup Bootstrap pop up: close button, heading, button for navigation to sub-form
+ * TODO: Setup front end form: (1)subscription by email
+ * TODO: Setup front end form: (2)register new customer
+ *
+ * TODO: Detect whether AJAX call and make proper calls to API
+ *
+ * TODO: (1): return link for user to front end, otherwise goto (2)
+ * TODO: (2): return message: success, please check your email, otherwise: notify error (3)
+ */

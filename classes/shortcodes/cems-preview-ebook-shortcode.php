@@ -54,15 +54,30 @@ class CEMSPreviewEbookShortcode extends WPDKShortcode {
         return $shortcodes;
     }
 
+    /**
+     * Display the preview button with its full function
+     *
+     *     $defaults = array(
+     *      'list_id'          => -1,
+     *     );
+     *
+     * @brief Display the preview button
+     *
+     * @param array       $attributes    Attribute into the shortcode
+     *
+     * @return string
+     */
     function cems_preview_ebook( $attributes ) {
-        $a = shortcode_atts( array(
-            'list_id' => '-1'
-        ), $attributes );
+        $output = '';
+        $defaults = array(
+            'list_id' => -1,
+            'book_title' => '',
+        );
+        $attributes = shortcode_atts( $defaults, $attributes, 'cems_preview_ebook' );
 
-        ob_start();
-        //#TODO: print button here
-        echo $a['list_id'];
-	    return ob_get_clean();
+        $previewContent = new CEMSPreviewEbook( $attributes );
+        $output  = $previewContent->html();
+	    return $output;
     }
 
 }
