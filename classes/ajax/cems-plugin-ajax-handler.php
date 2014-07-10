@@ -69,12 +69,12 @@ if ( wpdk_is_ajax() ) {
             // Prepare response
             $response = new WPDKAjaxResponse();
 
-            if ( !isset( $_POST['listId'] ) || empty( $_POST['subscriptionEmail'] || intval($_POST['listId'])<=0) ) {
+            if ( !isset( $_POST['listId'] ) || empty( $_POST['subscriptionEmail']) || intval($_POST['listId'])<=0 ) {
                 $response->error = __( 'Invalid Data. Please contact your administrator.', WPCEMS_TEXTDOMAIN );
                 $response->json();
             }
             $listId = intval($_POST['listId']);
-            $customer_email = $_POST['subscriptionEmail'];
+            $customer_email = sanitize_email($_POST['subscriptionEmail']);
 
             $client=new CEMS\Client(CEMSPluginPreferences::init()->general->api_token,CEMSPluginPreferences::init()->general->api_url);
             try{
@@ -91,9 +91,10 @@ if ( wpdk_is_ajax() ) {
             }
             //TODO: getRequestQuery if it can
             //TODO: support check data null in API
-            $customer=$res->getObject('CEMS\Customer');
+            if (isset($res))
+                $customer=$res->getObject('CEMS\Customer');
             //TODO: check Subscription da tao hay chua?
-            //TODO: Alow tao nhieu subscription?
+            //TODO: Allow tao nhieu subscription?
             try{
                 $res=$client->post('/admin/subscriptions.json',
                     array(
@@ -127,14 +128,15 @@ if ( wpdk_is_ajax() ) {
             // Prepare response
             $response = new WPDKAjaxResponse();
 
-            //TODO: Check customer already?
-            if ( !isset( $_POST['listId'] ) || empty( $_POST['subscriptionEmail'] || intval($_POST['listId'])<=0) ) {
+            //Prepare data
+            if ( !isset( $_POST['listId'] ) || empty( $_POST['subscriptionEmail']) || intval($_POST['listId'])<=0 ) {
                 $response->error = __( 'Invalid Data. Please contact your administrator.', WPCEMS_TEXTDOMAIN );
                 $response->json();
             }
             $listId = intval($_POST['listId']);
-            $customer_email = $_POST['subscriptionEmail'];
+            $customer_email = sanitize_email($_POST['subscriptionEmail']);
 
+            //Find already customer
             $client=new CEMS\Client(CEMSPluginPreferences::init()->general->api_token,CEMSPluginPreferences::init()->general->api_url);
             try{
                 $res=$client->get('/admin/customers/find_by.json',
@@ -146,32 +148,6 @@ if ( wpdk_is_ajax() ) {
             catch (CEMS\Error $e)
             {
                 $response->error='Bad Request: '.$e;
-                $response->json();
-            }
-            if (isset($res->getObject('CEMS\Customer')->id))
-            {
-                $response->error=__('Customer Already Registered ', WPCEMS_TEXTDOMAIN );
-                $response->json();
-            }
-
-            //TODO: Create New Customer
-            //TODO: Create Subscription To List
-            $customer=$res->getObject('CEMS\Customer');
-            //TODO: check Subscription da tao hay chua?
-            //TODO: Alow tao nhieu subscription?
-            try{
-                $res=$client->post('/admin/subscriptions.json',
-                    array(
-                        'customer_id' => $customer->id,
-                        'subscriber_list_id' => $listId,
-                        'status' => 'confirmed' //preventing email confirmation
-                        //TODO: check this status is 'confirmed' or 'confirm'?
-                    )
-                );
-            }
-            catch (CEMS\Error $e)
-            {
-                $response->error='Bad Things Happened: '.$e;
                 $response->json();
             }
 

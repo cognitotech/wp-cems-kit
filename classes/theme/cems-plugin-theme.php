@@ -64,9 +64,13 @@ class CEMSPluginTheme extends WPDKWordPressTheme{
         // Added styles and script for frontend
         wp_enqueue_script( 'wpcems-bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js', array('jquery'), false, true );
         wp_enqueue_script( 'wpcems-bootstrapvalidator', '//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.4.5/js/bootstrapValidator.min.js', array( 'wpcems-bootstrap' ), false, true );
-        wp_enqueue_script( 'wpcems-ebooksubscription', WPCEMS_URL_JAVASCRIPT . 'cems-ebooksubscription.js', array( 'wpcems-bootstrapvalidator' ), false, true );
+        wp_enqueue_script( 'wpcems-chosen', '//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js', array( 'jquery' ), false, true );
+        wp_enqueue_script( 'wpcems-ebooksubscription', WPCEMS_URL_JAVASCRIPT . 'cems-ebooksubscription.js', array( 'wpcems-bootstrapvalidator','wpcems-chosen' ), false, true );
+
         wp_enqueue_style( 'wpcems-theme', WPCEMS_URL_CSS . 'cems-theme.css', array(),false);
         wp_enqueue_style( 'wpcems-bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css',array(),false);
+        wp_enqueue_style( 'wpcems-chosen', '//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css',array(),false);
+        wp_enqueue_style( 'wpcems-bootstrap-chosen', WPCEMS_URL_CSS . 'bootstrap-chosen.min.css', array(),false);
         wp_enqueue_style( 'wpcems-bootstrapvalidator', '//cdn.jsdelivr.net/jquery.bootstrapvalidator/0.4.5/css/bootstrapValidator.min.css',array(),false);
     }
 

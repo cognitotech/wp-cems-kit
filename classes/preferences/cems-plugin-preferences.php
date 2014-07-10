@@ -119,16 +119,17 @@ class CEMSPreferencesGeneralBranch extends WPDKPreferencesBranch
     {
         // Update and sanitize from post data
 
-        $this->api_url = $_POST[self::API_URL];
+        $this->api_url = esc_url_raw($_POST[self::API_URL]);
+
         if ((strlen($_POST[self::API_EMAIL])>0) && (strlen($_POST[self::API_PASSWORD])>0)) {
-            $email = $_POST[self::API_EMAIL];
+            $email = sanitize_email($_POST[self::API_EMAIL]);
             $pass = $_POST[self::API_PASSWORD];
 
             try {
-            $client = new CEMS\Client($email, $pass, $this->api_url);
+                $client = new CEMS\Client($email, $pass, $this->api_url);
             }
             catch (CEMS\Error $e) {
-                wp_die($e.' '.$this->api_url.' '.$email.' '.$pass);
+                wp_die($e.'\nSome Input Data:'.$this->api_url.' '.$email);
             }
             if (isset($client))
                 $this->api_token=$client->getAccessToken();

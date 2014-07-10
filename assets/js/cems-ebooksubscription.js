@@ -6,40 +6,38 @@ jQuery.noConflict();
 })(jQuery);
 
 jQuery(document).ready(function ($) {
-// Sending something...
 
+    $(".chosen-select").chosen({width: "100%"});
+    // Sending something...
     function CEMSAjaxCall(submitBtn, cems_action, form) {
         submitBtn.bootstrapBtn('loading');
         $.post(wpdk_i18n.ajaxURL,
-            {
-                action: cems_action,
-                param: $(form).serialize()
-            },
+            "action="+cems_action+"&"+$(form).serialize(),
             function (result) {
                 var response = new WPDKAjaxResponse(result);
-                var $result_form=$(form);
-                // OK
+                var $alert=$('#cems-alert');
+                $alert.empty();
+
+                var textResponse='';
                 if (empty(response.error)) {
-                    $result_form.parent('.panel-body').empty().append('<div class="alert alert-success" role="alert">'+response.message+'</div>');
+                    // OK
+                    textResponse=response.message;
                 }
                 // Error
                 else {
-                    if ($result_form.attr('name')=== 'subscription-form' )
+                    if ($(form).attr('name')=== 'subscription-form' )
                     {
-                        $('#ebook-subscription #collapseCustomerForm').collapse('show').children('form').prepend('<div class="alert alert-danger" role="alert">'+response.error+'</div>');
+                        $('#collapseCustomerForm').collapse('show');
                     }
-                    else
-                        $result_form.append('<div class="alert alert-danger" role="alert">'+response.error+'</div>');
+                    textResponse=response.error;
                 }
+                $alert.append('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Đóng</span></button>'+textResponse+'</div>');
             }
         ).always(function(){
             submitBtn.bootstrapBtn('reset');
         });
     }
 
-    $('#btn-new-customer-submit').click(function () {
-        CEMSAjaxCall(this, 'register_new_customer_ajax_action', $('#customer-register-form').serialize());
-    });
     $("#subscription-form").bootstrapValidator({
         message:"Giá trị không hợp lệ",
         feedbackIcons: {
@@ -48,7 +46,7 @@ jQuery(document).ready(function ($) {
             validating: 'glyphicon glyphicon-refresh'
         },
         submitHandler: function(validator, form, submitButton) {
-            CEMSAjaxCall(submitButton, 'get_book_for_already_customer_ajax_action', form);
+            CEMSAjaxCall(submitButton, 'get_book_for_already_customer_action', form);
         },
         fields: {
             subscriptionEmail: {
@@ -63,5 +61,41 @@ jQuery(document).ready(function ($) {
             }
         }
     });
-    $("#customer-form").bootstrapValidator();
+    $("#customer-form").bootstrapValidator({
+        message:"Giá trị không hợp lệ",
+        feedbackIcons: {
+            valid: 'glyphicon glyphicon-ok',
+            invalid: 'glyphicon glyphicon-remove',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        submitHandler: function(validator, form, submitButton) {
+            CEMSAjaxCall(submitButton, 'register_new_customer_action', form);
+        },
+        fields: {
+            customerName: {
+                validators: {
+                    notEmpty:{
+                        message:'Họ và tên không được để trống'
+                    }
+                }
+            },
+            customerEmail: {
+                validators: {
+                    emailAddress: {
+                        message:'Địa chỉ email không hợp lệ'
+                    },
+                    notEmpty: {
+                        message:'Email không được để trống'
+                    }
+                }
+            },
+            customerPhone: {
+                validators: {
+                    notEmpty:{
+                        message:'Số điện thoại không được để trống'
+                    }
+                }
+            }
+        }
+    });
 });
