@@ -85,7 +85,13 @@ class CEMSPreviewEbook {
                 <p></p>
                 <div id="ebook-subscription" class="collapse">
                     <p>Bạn đã đăng ký email để tải thông tin trên trang TGM Books chưa?</p>
-                    <div id="cems-alerts"></div>
+                    <div class="alert alert-danger alert-dismissible" role="alert" id="cems-alert" style="display: none">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Đóng</span>
+                        </button>
+                        <div class="error-response"></div>
+                    </div>
                     <div class="panel-group" id="cems-accordion1">
                         <div class="panel panel-default">
                             <div class="panel-heading">
