@@ -11,27 +11,32 @@ jQuery(document).ready(function ($) {
     // Sending something...
     function CEMSAjaxCall(submitBtn, cems_action, form) {
         submitBtn.bootstrapBtn('loading');
+        var $alert=$('#cems-alert');
+        $alert.fadeOut('slow');
         $.post(wpdk_i18n.ajaxURL,
             "action="+cems_action+"&"+$(form).serialize(),
             function (result) {
                 var response = new WPDKAjaxResponse(result);
-                var $alert=$('#cems-alert');
-                $alert.empty();
 
                 var textResponse='';
                 if (empty(response.error)) {
                     // OK
-                    textResponse=response.message;
+                    textResponse=response.message+'<br>'+response.data;
+                    $alert.removeClass('alert-danger').addClass('alert-success');
                 }
                 // Error
                 else {
                     if ($(form).attr('name')=== 'subscription-form' )
                     {
+                        $('#collapseSubscriptionForm').collapse('hide');
+                        $('#customer-email').val($('#subscription-email').val());
                         $('#collapseCustomerForm').collapse('show');
                     }
                     textResponse=response.error;
+                    $alert.removeClass('alert-success').addClass('alert-danger');
                 }
-                $alert.append('<div class="alert alert-success alert-dismissible" role="alert"><button type="button" class="close" data-dismiss="alert"><span aria-hidden="true">&times;</span><span class="sr-only">Đóng</span></button>'+textResponse+'</div>');
+                $alert.children('.error-response').html(textResponse);
+                $alert.fadeIn('slow');
             }
         ).always(function(){
             submitBtn.bootstrapBtn('reset');
