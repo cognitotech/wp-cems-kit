@@ -96,7 +96,7 @@ if ( wpdk_is_ajax() ) {
             catch(CEMS\BaseException $e)
             {
                 //$response->error='Error when Create Customer: '.$e;
-                $response->error=CEMSPluginPreferences::init()->errors->email_not_available;
+                $response->error=CEMSPluginPreferences::init()->error_messages->email_not_available;
                 $response->json();
             }
             if (isset($customer))
@@ -117,7 +117,7 @@ if ( wpdk_is_ajax() ) {
 
             //Prepare data
             if ( !isset( $_POST['listId'] ) || empty( $_POST['subscriptionEmail']) || intval($_POST['listId'])<=0 ) {
-                $response->error = CEMSPluginPreferences::init()->errors->invalid_data;
+                $response->error = CEMSPluginPreferences::init()->error_messages->invalid_data;
                 $response->json();
             }
             $listId = intval($_POST['listId']);
@@ -133,7 +133,7 @@ if ( wpdk_is_ajax() ) {
             }
             catch(CEMS\BaseException $e)
             {
-                $response->error=CEMSPluginPreferences::init()->errors->email_not_found;
+                $response->error=CEMSPluginPreferences::init()->error_messages->email_not_found;
                 $response->json();
             }
             if (isset($customer))
@@ -186,7 +186,7 @@ if ( wpdk_is_ajax() ) {
             catch (CEMS\BaseException $e) {
                 if ($e->getCode()!='404') //we find the not found status, if we got anything else, it means DOOM
                 {
-                    $response->error='[ErrorCodeSG]'.CEMSPluginPreferences::init()->errors->subscription_unknown;
+                    $response->error='[ErrorCodeSG]'.CEMSPluginPreferences::init()->error_messages->subscription_unknown;
                     $response->json();
                 }
             }
@@ -206,7 +206,7 @@ if ( wpdk_is_ajax() ) {
                 }
                 catch (CEMS\BaseException $e){
                     //cannot make new Subscription, kidding?
-                    $response->error='[ErrorCodeSC]'.CEMSPluginPreferences::init()->errors->subscription_unknown;
+                    $response->error='[ErrorCodeSC]'.CEMSPluginPreferences::init()->error_messages->subscription_unknown;
                     $response->json();
                 }
             }
@@ -221,7 +221,7 @@ if ( wpdk_is_ajax() ) {
                 }
                 catch (CEMS\BaseException $e){
                     //cannot fetch the List :(
-                    $response->error=CEMSPluginPreferences::init()->errors->list_not_found;
+                    $response->error=CEMSPluginPreferences::init()->error_messages->list_not_found;
                     $response->json();
                 }
             }
@@ -235,7 +235,7 @@ if ( wpdk_is_ajax() ) {
                 $response->data='<a href="'.$link.'">$link</a>';
             }
             else
-                $response->data=CEMSPluginPreferences::init()->errors->link_not_found;
+                $response->data=CEMSPluginPreferences::init()->error_messages->link_not_found;
             $response->json();
         }
     }
