@@ -58,7 +58,8 @@ class CEMSPluginPreferences extends WPDKPreferences
      *
      * @var CEMSPreferencesCustomErrorsBranch
      */
-    public $errors;
+    public $error_messages;
+
     /**
      * Return an instance of CEMSPluginPreferences class from the database.
      *
@@ -78,9 +79,9 @@ class CEMSPluginPreferences extends WPDKPreferences
      */
     public function defaults()
     {
-        $this->general = new CEMSPreferencesGeneralBranch();
-        $this->layout = new CEMSPreferencesLayoutBranch();
-        $this->errors = new CEMSPreferencesCustomErrorsBranch();
+        $this->general = new CEMSPreferencesGeneralBranch(  );
+        $this->layout = new CEMSPreferencesLayoutBranch(  );
+        $this->error_messages = new CEMSPreferencesCustomErrorsBranch ( );
     }
 
 }
