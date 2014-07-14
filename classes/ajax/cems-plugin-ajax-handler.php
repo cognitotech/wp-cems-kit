@@ -215,7 +215,7 @@ if ( wpdk_is_ajax() ) {
             {
                 try{
                     $list=$this->callCEMSApi('GET',
-                        "/admin/subscriber_lists.json/$listId"
+                        "/admin/subscriber_lists/$listId.json/"
                     );
                 }
                 catch (CEMS\BaseException $e){
@@ -228,10 +228,10 @@ if ( wpdk_is_ajax() ) {
             $response->message='Success!';
             //change data for link here
             $list=$list->getObject('CEMS\Resource');
-            if (isset($list->ebook_link))
-                $response->data=$list->ebook_link;
+            if (isset($list->download_link))
+                $response->data='<a href="$list->download_link>">$list->download_link></a>';
             else
-                $response->data=' Intentionally Blanked link ';
+                $response->data='<a href="#">Intentionally Blanked link</a>';
             $response->json();
         }
     }
