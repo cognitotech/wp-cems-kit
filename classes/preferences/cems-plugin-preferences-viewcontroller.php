@@ -41,10 +41,12 @@ class CEMSPluginPreferencesViewController extends WPDKPreferencesViewController
         // Single instances of tab content
         $general_view = new CEMSPreferencesGeneralView();
         $layout_view = new CEMSPreferencesLayoutView();
+        $errors_view = new CEMSPreferencesCustomErrorsView();
 
         // Create each single tab
         $tabs = array(
             new WPDKjQueryTab($general_view->id, __('Genral Settings',WPCEMS_TEXTDOMAIN), $general_view->html()),
+            new WPDKjQueryTab($errors_view->id, __('Custom Error Messages',WPCEMS_TEXTDOMAIN), $errors_view->html()),
             new WPDKjQueryTab($layout_view->id, __('Custom CSS Layout',WPCEMS_TEXTDOMAIN), $layout_view->html()),
         );
 
@@ -229,4 +231,111 @@ class CEMSPreferencesLayoutView extends WPDKPreferencesView {
 
         return $fields;
     }
+}
+
+
+/**
+ * Description
+ *
+ * @class           CEMSPreferencesCustomErrorsView
+ * @author             pnghai <nguyenhai@siliconstraits.vn>
+ * @copyright          Copyright (C) 2014-2015 Silicon Straits. All Rights Reserved.
+ * @date               2014-07-15
+ * @version            1.0.0
+ *
+ */
+class CEMSPreferencesCustomErrorsView extends WPDKPreferencesView
+{
+
+    /**
+     * Create an instance of CEMSPreferencesCustomErrorsView class
+     *
+     * @brief Construct
+     *
+     * @return CEMSPreferencesCustomErrorsView
+     */
+    public function __construct()
+    {
+        $preferences = CEMSPluginPreferences::init();
+
+        parent::__construct($preferences, 'general');
+    }
+
+    /**
+     * Return a sdf array for form fields
+     *
+     * @brief Return array for form fields
+     *
+     * @param CEMSPreferencesCustomErrorsBranch $errors
+     *
+     * @return array
+     */
+    public function fields( $errors )
+    {
+
+        $fields = array(
+
+            __( 'Tùy biến thông báo lỗi', WPCEMS_TEXTDOMAIN ) => array(
+
+                __( 'Thay đổi các thông báo lỗi bên dưới.', WPCEMS_TEXTDOMAIN ),
+
+                array(
+                    array(
+                        'type'  => WPDKUIControlType::TEXT,
+                        'name'  => CEMSPreferencesCustomErrorsBranch::ERROR_INVALID_DATA,
+                        'label' => __( 'Lỗi dữ liệu nhập', WPCEMS_TEXTDOMAIN ),
+                        'value' => $errors->invalid_data
+                    )
+                ),
+
+                array(
+                    array(
+                        'type'  => WPDKUIControlType::TEXT,
+                        'name'  => CEMSPreferencesCustomErrorsBranch::ERROR_EMAIL_NOT_AVAILABLE,
+                        'label' => __( 'Lỗi email đã tồn t', WPCEMS_TEXTDOMAIN ),
+                        'value' => $errors->email_not_available
+                    )
+                ),
+
+                array(
+                    array(
+                        'type'  => WPDKUIControlType::TEXT,
+                        'name'  => CEMSPreferencesCustomErrorsBranch::ERROR_EMAIL_NOT_FOUND,
+                        'label' => __( 'Lỗi không tìm thấy email', WPCEMS_TEXTDOMAIN ),
+                        'value' => $errors->email_not_found
+                    )
+                ),
+
+                array(
+                    array(
+                        'type'  => WPDKUIControlType::TEXT,
+                        'name'  => CEMSPreferencesCustomErrorsBranch::ERROR_SUBSCRIPTION_UNKNOWN,
+                        'label' => __( 'Lỗi quá trình subscription bị lỗi', WPCEMS_TEXTDOMAIN ),
+                        'value' => $errors->subscription_unknown
+                    )
+                ),
+
+                array(
+                    array(
+                        'type'  => WPDKUIControlType::TEXT,
+                        'name'  => CEMSPreferencesCustomErrorsBranch::ERROR_LIST_NOT_FOUND,
+                        'label' => __( 'Lỗi không thấy list', WPCEMS_TEXTDOMAIN ),
+                        'value' => $errors->list_not_found
+                    )
+                ),
+
+                array(
+                    array(
+                        'type'  => WPDKUIControlType::TEXT,
+                        'name'  => CEMSPreferencesCustomErrorsBranch::ERROR_LINK_NOT_FOUND,
+                        'label' => __( 'Lỗi list không có download_link', WPCEMS_TEXTDOMAIN ),
+                        'value' => $errors->link_not_found
+                    )
+                ),
+            )
+        );
+
+        return $fields;
+    }
+
 }

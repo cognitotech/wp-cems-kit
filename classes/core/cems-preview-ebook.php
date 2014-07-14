@@ -40,7 +40,7 @@ class CEMSPreviewEbook {
      *
      * @brief Construct
      *
-     * @param array Required Shortcode Attributes
+     * @param array $attributes Required Shortcode Attributes
      *
      * @return CEMSPreviewEbook
      */
@@ -139,7 +139,69 @@ Họ tên',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
 Tỉnh thành',WPCEMS_TEXTDOMAIN);?></label>
                                             <div class="col-sm-9">
                                                 <select class="chosen-select" id="customer-province" name="customerProvince">
-                                                     <option value="1">An Giang</option><option value="2">Bà Rịa - Vũng Tàu</option><option value="4">Bắc Cạn</option><option value="5">Bắc Giang</option><option value="3">Bạc Liêu</option><option value="6">Bắc Ninh</option><option value="7">Bến Tre</option><option value="8">Bình Dương</option><option value="9">Bình Định</option><option value="10">Bình Phước</option><option value="11">Bình Thuận</option><option value="12">Cà Mau</option><option value="14">Cần Thơ</option><option value="13">Cao Bằng</option><option value="15">Đà Nẵng</option><option value="16">Đắk Lắk</option><option value="17">Đắk Nông</option><option value="18">Điện Biên</option><option value="19">Đồng Nai</option><option value="20">Đồng Tháp</option><option value="21">Gia Lai</option><option value="22">Hà Giang</option><option value="23">Hà Nam</option><option value="24">Hà Nội</option><option value="26">Hà Tĩnh</option><option value="27">Hải Dương</option><option value="28">Hải Phòng</option><option value="29">Hậu Giang</option><option value="31" selected="selected">Hồ Chí Minh</option><option value="30">Hòa Bình</option><option value="32">Hưng Yên</option><option value="33">Khánh Hoà</option><option value="34">Kiên Giang</option><option value="35">Kon Tum</option><option value="36">Lai Châu</option><option value="39">Lâm Đồng</option><option value="37">Lạng Sơn</option><option value="38">Lào Cai</option><option value="40">Long An</option><option value="41">Nam Định</option><option value="42">Nghệ An</option><option value="43">Ninh Bình</option><option value="44">Ninh Thuận</option><option value="45">Phú Thọ</option><option value="46">Phú Yên</option><option value="47">Quảng Bình</option><option value="48">Quảng Nam</option><option value="49">Quảng Ngãi</option><option value="50">Quảng Ninh</option><option value="51">Quảng Trị</option><option value="52">Sóc Trăng</option><option value="53">Sơn La</option><option value="54">Tây Ninh</option><option value="55">Thái Bình</option><option value="56">Thái Nguyên</option><option value="57">Thanh Hoá</option><option value="58">Thừa Thiên - Huế</option><option value="59">Tiền Giang</option><option value="60">Trà Vinh</option><option value="61">Tuyên Quang</option><option value="62">Vĩnh Long</option><option value="63">Vĩnh Phúc</option><option value="64">Yên Bái</option>
+                                                        <option value="An Giang">An Giang</option>
+                                                        <option value="Bà Rịa - Vũng Tàu">Bà Rịa - Vũng Tàu</option>
+                                                        <option value="Bắc Cạn">Bắc Cạn</option>
+                                                        <option value="Bắc Giang">Bắc Giang</option>
+                                                        <option value="Bạc Liêu">Bạc Liêu</option>
+                                                        <option value="Bắc Ninh">Bắc Ninh</option>
+                                                        <option value="Bến Tre">Bến Tre</option>
+                                                        <option value="Bình Dương">Bình Dương</option>
+                                                        <option value="Bình Định">Bình Định</option>
+                                                        <option value="Bình Phước">Bình Phước</option>
+                                                        <option value="Bình Thuận">Bình Thuận</option>
+                                                        <option value="Cà Mau">Cà Mau</option>
+                                                        <option value="Cần Thơ">Cần Thơ</option>
+                                                        <option value="Cao Bằng">Cao Bằng</option>
+                                                        <option value="Đà Nẵng">Đà Nẵng</option>
+                                                        <option value="Đắk Lắk">Đắk Lắk</option>
+                                                        <option value="Đắk Nông">Đắk Nông</option>
+                                                        <option value="Điện Biên">Điện Biên</option>
+                                                        <option value="Đồng Nai">Đồng Nai</option>
+                                                        <option value="Đồng Tháp">Đồng Tháp</option>
+                                                        <option value="Gia Lai">Gia Lai</option>
+                                                        <option value="Hà Giang">Hà Giang</option>
+                                                        <option value="Hà Nam">Hà Nam</option>
+                                                        <option value="Hà Nội">Hà Nội</option>
+                                                        <option value="Hà Tĩnh">Hà Tĩnh</option>
+                                                        <option value="Hải Dương">Hải Dương</option>
+                                                        <option value="Hải Phòng">Hải Phòng</option>
+                                                        <option value="Hậu Giang">Hậu Giang</option>
+                                                        <option value="Hồ Chí Minh" selected>TP Hồ Chí Minh</option>
+                                                        <option value="Hòa Bình">Hòa Bình</option>
+                                                        <option value="Hưng Yên">Hưng Yên</option>
+                                                        <option value="Khánh Hoà">Khánh Hoà</option>
+                                                        <option value="Kiên Giang">Kiên Giang</option>
+                                                        <option value="Kon Tum">Kon Tum</option>
+                                                        <option value="Lai Châu">Lai Châu</option>
+                                                        <option value="Lâm Đồng">Lâm Đồng</option>
+                                                        <option value="Lạng Sơn">Lạng Sơn</option>
+                                                        <option value="Lào Cai">Lào Cai</option>
+                                                        <option value="Long An">Long An</option>
+                                                        <option value="Nam Định">Nam Định</option>
+                                                        <option value="Nghệ An">Nghệ An</option>
+                                                        <option value="Ninh Bình">Ninh Bình</option>
+                                                        <option value="Ninh Thuận">Ninh Thuận</option>
+                                                        <option value="Phú Thọ">Phú Thọ</option>
+                                                        <option value="Phú Yên">Phú Yên</option>
+                                                        <option value="Quảng Bình">Quảng Bình</option>
+                                                        <option value="Quảng Nam">Quảng Nam</option>
+                                                        <option value="Quảng Ngãi">Quảng Ngãi</option>
+                                                        <option value="Quảng Ninh">Quảng Ninh</option>
+                                                        <option value="Quảng Trị">Quảng Trị</option>
+                                                        <option value="Sóc Trăng">Sóc Trăng</option>
+                                                        <option value="Sơn La">Sơn La</option>
+                                                        <option value="Tây Ninh">Tây Ninh</option>
+                                                        <option value="Thái Bình">Thái Bình</option>
+                                                        <option value="Thái Nguyên">Thái Nguyên</option>
+                                                        <option value="Thanh Hoá">Thanh Hoá</option>
+                                                        <option value="Thừa Thiên - Huế">Thừa Thiên - Huế</option>
+                                                        <option value="Tiền Giang">Tiền Giang</option>
+                                                        <option value="Trà Vinh">Trà Vinh</option>
+                                                        <option value="Tuyên Quang">Tuyên Quang</option>
+                                                        <option value="Vĩnh Long">Vĩnh Long</option>
+                                                        <option value="Vĩnh Phúc">Vĩnh Phúc</option>
+                                                        <option value="Yên Bái">Yên Bái</option>
                                                 </select>
                                             </div>
                                         </div>
@@ -158,16 +220,16 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                                             </div>
                                         </div>
                                         <div class="form-group">
-                                            <label for="customer-reading" class="col-sm-5">Bạn thích đọc loại sách nào?  <p class="help-block">(có thể chọn nhiều loại)</p></label>
+                                            <label for="customer-reading" class="col-sm-5">Bạn thích đọc loại sách nào?<br><span class="help-block">(có thể chọn nhiều loại)</span></label>
                                             <div class="col-sm-7 checkbox" id="customer-reading">
                                                     <label for="customer-reading-1">
-                                                        <input id="customer-reading-1" type="checkbox" class="loaisach" name="customerReading[]" value="1">Phát triển bản thân và kỹ năng.
+                                                        <input id="customer-reading-1" type="checkbox" class="loaisach" name="customerReading[]" value="Phát triển bản thân và kỹ năng">Phát triển bản thân và kỹ năng.
                                                     </label>
                                                     <label for="customer-reading-2">
-                                                        <input id="customer-reading-2" type="checkbox" class="loaisach" name="customerReading[]" value="2">Kinh doanh &amp; đầu tư
+                                                        <input id="customer-reading-2" type="checkbox" class="loaisach" name="customerReading[]" value="Kinh doanh & đầu tư">Kinh doanh &amp; đầu tư
                                                     </label>
                                                     <label for="customer-reading-3">
-                                                        <input id="customer-reading-3" type="checkbox" class="loaisach" name="customerReading[]" value="3">Các mối quan hệ gia đình và con cái.
+                                                        <input id="customer-reading-3" type="checkbox" class="loaisach" name="customerReading[]" value="Các mối quan hệ gia đình và con cái">Các mối quan hệ gia đình và con cái.
                                                     </label>
                                             </div>
                                         </div>

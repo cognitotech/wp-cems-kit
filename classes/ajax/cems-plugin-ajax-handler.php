@@ -79,7 +79,7 @@ if ( wpdk_is_ajax() ) {
             $full_name= sanitize_text_field($_POST['customerName']);
             //specific guessing based on the fact that the current TGMBooks using numeric value
             $province = intval($_POST['customerProvince']);
-            $reading=array_map('intval',$_POST['customerReading']);
+            $reading=array_map('sanitize_text_field',$_POST['customerReading']);
             //create customer
             try {
                 $customer=$this->callCEMSApi('POST',
@@ -88,14 +88,15 @@ if ( wpdk_is_ajax() ) {
                         'email' => $customer_email,
                         'full_name' => $full_name,
                         'phone'=>$phone,
-                        'custom fields[province]'=>$province,
-                        'custom fields[reading[]]'=>$reading,
+                        'customer[place]'=>$province,
+                        'customer[loai_sach]'=>$reading,
                     )
                 )->getObject('CEMS\Customer');
             }
             catch(CEMS\BaseException $e)
             {
-                $response->error='Error when Create Customer: '.$e;
+                //$response->error='Error when Create Customer: '.$e;
+                $response->error=CEMSPluginPreferences::init()->errors->email_not_available;
                 $response->json();
             }
             if (isset($customer))
@@ -116,7 +117,7 @@ if ( wpdk_is_ajax() ) {
 
             //Prepare data
             if ( !isset( $_POST['listId'] ) || empty( $_POST['subscriptionEmail']) || intval($_POST['listId'])<=0 ) {
-                $response->error = __( 'Invalid Data. Please contact your administrator.', WPCEMS_TEXTDOMAIN );
+                $response->error = CEMSPluginPreferences::init()->errors->invalid_data;
                 $response->json();
             }
             $listId = intval($_POST['listId']);
@@ -132,7 +133,7 @@ if ( wpdk_is_ajax() ) {
             }
             catch(CEMS\BaseException $e)
             {
-                $response->error='Customer: '.$e;
+                $response->error=CEMSPluginPreferences::init()->errors->email_not_found;
                 $response->json();
             }
             if (isset($customer))
@@ -185,7 +186,7 @@ if ( wpdk_is_ajax() ) {
             catch (CEMS\BaseException $e) {
                 if ($e->getCode()!='404') //we find the not found status, if we got anything else, it means DOOM
                 {
-                    $response->error='Subscription: '.$e->getCode().' '.$e;
+                    $response->error='[ErrorCodeSG]'.CEMSPluginPreferences::init()->errors->subscription_unknown;
                     $response->json();
                 }
             }
@@ -205,7 +206,7 @@ if ( wpdk_is_ajax() ) {
                 }
                 catch (CEMS\BaseException $e){
                     //cannot make new Subscription, kidding?
-                    $response->error='Subscription Creation Error: '.$e;
+                    $response->error='[ErrorCodeSC]'.CEMSPluginPreferences::init()->errors->subscription_unknown;
                     $response->json();
                 }
             }
@@ -220,7 +221,7 @@ if ( wpdk_is_ajax() ) {
                 }
                 catch (CEMS\BaseException $e){
                     //cannot fetch the List :(
-                    $response->error='Book List Error: '.$e;
+                    $response->error=CEMSPluginPreferences::init()->errors->list_not_found;
                     $response->json();
                 }
             }
@@ -229,9 +230,12 @@ if ( wpdk_is_ajax() ) {
             //change data for link here
             $list=$list->getObject('CEMS\Resource');
             if (isset($list->download_link))
-                $response->data='<a href="$list->download_link>">$list->download_link></a>';
+            {
+                $link=$list->download_link;
+                $response->data='<a href="'.$link.'">$link</a>';
+            }
             else
-                $response->data='<a href="#">Intentionally Blanked link</a>';
+                $response->data=CEMSPluginPreferences::init()->errors->link_not_found;
             $response->json();
         }
     }

@@ -51,6 +51,15 @@ class CEMSPluginPreferences extends WPDKPreferences
     public $layout;
 
     /**
+     * Error Message
+     *
+     * @brief Layout
+     * @since 1.2.0
+     *
+     * @var CEMSPreferencesCustomErrorsBranch
+     */
+    public $errors;
+    /**
      * Return an instance of CEMSPluginPreferences class from the database.
      *
      * @brief Init
@@ -71,6 +80,7 @@ class CEMSPluginPreferences extends WPDKPreferences
     {
         $this->general = new CEMSPreferencesGeneralBranch();
         $this->layout = new CEMSPreferencesLayoutBranch();
+        $this->errors = new CEMSPreferencesCustomErrorsBranch();
     }
 
 }
@@ -197,4 +207,68 @@ class CEMSPreferencesLayoutBranch extends WPDKPreferencesBranch {
         $this->css_style          = esc_attr( $_POST[self::CSS_STYLE] );
         $this->css_style_enabled  = esc_attr( $_POST[self::CSS_STYLE_ENABLED] );
     }
+}
+
+
+/**
+ * CEMS Custom Error Messages preferences branch model
+ *
+ * @author             pnghai <nguyenhai@siliconstraits.vn>
+ * @copyright          Copyright (C) 2014-2015 Silicon Straits. All Rights Reserved.
+ * @date               2014-07-15
+ * @version            1.0.0
+ *
+ */
+class CEMSPreferencesCustomErrorsBranch extends WPDKPreferencesBranch
+{
+
+    // You can define your post field constants
+    const ERROR_INVALID_DATA = 'wpcems_error_invalid_data';
+    const ERROR_EMAIL_NOT_AVAILABLE = 'wpcems_error_email_not_available';
+    const ERROR_EMAIL_NOT_FOUND = 'wpcems_error_email_not_found';
+    const ERROR_SUBSCRIPTION_UNKNOWN = 'wpcems_error_subscription_unknown';
+    const ERROR_LIST_NOT_FOUND = 'wpcems_error_list_not_found';
+    const ERROR_LINK_NOT_FOUND = 'wpcems_error_link_not_found';
+    // Interface of preferences branch
+
+
+    public $invalid_data;
+    public $email_not_available;
+    public $email_not_found;
+    public $subscription_unknown;
+    public $list_not_found;
+    public $link_not_found;
+
+    /**
+     * Set the default preferences
+     *
+     * @brief Default preferences
+     */
+    public function defaults()
+    {
+        // Se the default for the first time or reset preferences
+        $this->invalid_data = 'Dữ liệu nhập vào không hợp lệ. Hãy kiểm tra hoặc liên hệ quản trị viên.';
+        $this->email_not_available = 'Email đã có hoặc không được phép';
+        $this->email_not_found = 'Không tìm thấy email.';
+        $this->subscription_unknown = 'Có lỗi xảy ra khi đăng ký với hệ thống. Xin liên hệ admin';
+        $this->list_not_found = 'Không tìm thấy ebook';
+        $this->link_not_found = 'Không tìm thấy link tải ebook';
+    }
+
+    /**
+     * Update this branch
+     *
+     * @brief Update
+     */
+    public function update()
+    {
+        // Update and sanitize from post data
+        $this->invalid_data = balanceTags( $_POST[self::ERROR_INVALID_DATA] );
+        $this->email_not_available  = balanceTags( $_POST[self::ERROR_EMAIL_NOT_AVAILABLE] );
+        $this->email_not_found  = balanceTags( $_POST[self::ERROR_EMAIL_NOT_FOUND] );
+        $this->subscription_unknown = balanceTags( $_POST[self::ERROR_SUBSCRIPTION_UNKNOWN] );
+        $this->list_not_found = balanceTags( $_POST[self::ERROR_LIST_NOT_FOUND] );
+        $this->link_not_found = balanceTags( $_POST[self::ERROR_LINK_NOT_FOUND] );
+    }
+
 }

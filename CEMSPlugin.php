@@ -90,11 +90,13 @@ if( !class_exists( 'CEMSPlugin' ) )
                 $this->classesPath . 'preferences/cems-plugin-preferences.php' => array(
                     'CEMSPluginPreferences',
                     'CEMSPreferencesGeneralBranch',
-                    'CEMSPreferencesLayoutBranch'),
+                    'CEMSPreferencesLayoutBranch',
+                    'CEMSPreferencesCustomErrorsBranch'),
                 $this->classesPath . 'preferences/cems-plugin-preferences-viewcontroller.php' => array(
                     'CEMSPluginPreferencesViewController',
                     'CEMSPreferencesGeneralView',
-                    'CEMSPreferencesLayoutView'),
+                    'CEMSPreferencesLayoutView',
+                    'CEMSPreferencesCustomErrorsView'),
                 $this->classesPath . 'other/about-viewcontroller.php' => 'AboutViewController',
                 $this->classesPath . 'shortcodes/cems-preview-ebook-shortcode.php' => 'CEMSPreviewEbookShortcode',
                 $this->classesPath . 'theme/cems-plugin-theme.php' => 'CEMSPluginTheme'
