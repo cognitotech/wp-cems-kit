@@ -78,7 +78,7 @@ if ( wpdk_is_ajax() ) {
             $phone = sanitize_text_field($_POST['customerPhone']);
             $full_name= sanitize_text_field($_POST['customerName']);
             //specific guessing based on the fact that the current TGMBooks using numeric value
-            $province = intval($_POST['customerProvince']);
+            $province = sanitize_text_field($_POST['customerProvince']);
             $reading=array_map('sanitize_text_field',$_POST['customerReading']);
             //create customer
             try {
@@ -88,16 +88,44 @@ if ( wpdk_is_ajax() ) {
                         'email' => $customer_email,
                         'full_name' => $full_name,
                         'phone'=>$phone,
-                        'customer[place]'=>$province,
-                        'customer[loai_sach]'=>$reading,
+                        'place'=>$province,
+                        'loai_sach'=>$reading,
                     )
                 )->getObject('CEMS\Customer');
             }
             catch(CEMS\BaseException $e)
             {
                 //$response->error='Error when Create Customer: '.$e;
-                $_POST['subscriptionEmail']=$customer_email;
-                $this->get_book_for_already_customer_action();
+                try {
+                    $customer=$this->callCEMSApi('GET',
+                        '/admin/customers/find_by.json',
+                        array(
+                            'email'=>$customer_email
+                        )
+                    )->getObject('CEMS\Customer');
+                }
+                catch(CEMS\BaseException $e)
+                {
+                    $response->error = '[ErrorCodeCCG]'.'Lỗi đường truyền, xin thử lại';
+                    $response->json();
+                }
+                if (isset($customer))
+                    try {
+                        $update_customer=$this->callCEMSApi('PUT',
+                            '/admin/customers/'.$customer->id.'.json',
+                            array(
+                                'full_name' => $full_name,
+                                'phone'=>$phone,
+                                'place'=>$province,
+                                'loai_sach'=>$reading,
+                            )
+                        )->getObject('CEMS\Customer');
+                    }
+                    catch (CEMS\BaseException $e)
+                    {
+                        $response->error = 'Không cập nhật thông tin được:'.$e;
+                        $response->json();
+                    }
             }
             if (isset($customer))
                 $this->getBook($response,$customer,$listId);
@@ -236,8 +264,8 @@ if ( wpdk_is_ajax() ) {
                 ob_start();
                 ?>
                 <div class="text-center">
-                <h3><a href="<?php echo $link;?>"><span class="label label-primary">Tải về</span></a></h3>
-                <?php echo CEMSPluginPreferences::init()->error_messages->book_success_more;?>
+                    <h3><a href="<?php echo $link;?>"><span class="label label-primary">Tải về</span></a></h3>
+                    <?php echo CEMSPluginPreferences::init()->error_messages->book_success_more;?>
                 </div>
                 <?php
                 $response->data=ob_get_clean();
