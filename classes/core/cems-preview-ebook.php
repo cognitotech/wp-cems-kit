@@ -80,7 +80,7 @@ class CEMSPreviewEbook {
         <div class="panel panel-default cems-preview-ebook-panel">
             <div class="panel-body">
                 <button type="button" class="center-block btn btn-primary" data-toggle="collapse" data-target="#ebook-subscription">
-                    Tải về và đọc thử sách <?php echo $this->book_title;?> (giống sách in 100%)
+                    Tải về và đọc thử sách <span id="book-title-request"><?php echo $this->book_title;?></span> (giống sách in 100%)
                 </button>
                 <p></p>
                 <div id="ebook-subscription" class="collapse">

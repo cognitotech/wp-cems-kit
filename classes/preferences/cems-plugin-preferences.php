@@ -230,8 +230,8 @@ class CEMSPreferencesCustomErrorsBranch extends WPDKPreferencesBranch
     const ERROR_SUBSCRIPTION_UNKNOWN = 'wpcems_error_subscription_unknown';
     const ERROR_LIST_NOT_FOUND = 'wpcems_error_list_not_found';
     const ERROR_LINK_NOT_FOUND = 'wpcems_error_link_not_found';
+    const BOOK_SUCCESS_MORE = 'wpcems_book_success_more';
     // Interface of preferences branch
-
 
     public $invalid_data;
     public $email_not_available;
@@ -239,6 +239,7 @@ class CEMSPreferencesCustomErrorsBranch extends WPDKPreferencesBranch
     public $subscription_unknown;
     public $list_not_found;
     public $link_not_found;
+    public $book_success_more;
 
     /**
      * Set the default preferences
@@ -254,6 +255,8 @@ class CEMSPreferencesCustomErrorsBranch extends WPDKPreferencesBranch
         $this->subscription_unknown = 'Có lỗi xảy ra khi đăng ký với hệ thống. Xin liên hệ admin';
         $this->list_not_found = 'Không tìm thấy ebook';
         $this->link_not_found = 'Không tìm thấy link tải ebook';
+        $this->book_success_more = '<p><i>(Lưu ý: Đường dẫn chỉ tồn tại trong 2 tiếng)</i></p>
+                <p>Ebook này không có mật khẩu (password) nhưng để đọc được ebook bạn cần phải có Adobe Reader phiên bản 9.0 trở lên. Bạn có thể tải phần mềm <a href="http://get.adobe.com/reader/">tại đây</a></p>';
     }
 
     /**
@@ -270,6 +273,7 @@ class CEMSPreferencesCustomErrorsBranch extends WPDKPreferencesBranch
         $this->subscription_unknown = balanceTags( $_POST[self::ERROR_SUBSCRIPTION_UNKNOWN] );
         $this->list_not_found = balanceTags( $_POST[self::ERROR_LIST_NOT_FOUND] );
         $this->link_not_found = balanceTags( $_POST[self::ERROR_LINK_NOT_FOUND] );
+        $this->book_success_more = balanceTags ( $_POST[self::BOOK_SUCCESS_MORE] );
     }
 
 }

@@ -96,8 +96,8 @@ if ( wpdk_is_ajax() ) {
             catch(CEMS\BaseException $e)
             {
                 //$response->error='Error when Create Customer: '.$e;
-                $response->error=CEMSPluginPreferences::init()->error_messages->email_not_available;
-                $response->json();
+                $_POST['subscriptionEmail']=$customer_email;
+                $this->get_book_for_already_customer_action();
             }
             if (isset($customer))
                 $this->getBook($response,$customer,$listId);
@@ -226,13 +226,21 @@ if ( wpdk_is_ajax() ) {
                 }
             }
             //TODO: return Ebook Link;
-            $response->message='Success!';
             //change data for link here
+            $response->message='
+                <div class="text-center">Cảm ơn bạn! Bạn có thể tải "<span class="book-title-result">'.$list->title.'</span>" tại đường dẫn dưới đây</div>';
             $list=$list->getObject('CEMS\Resource');
             if (isset($list->download_link))
             {
                 $link=$list->download_link;
-                $response->data='<a href="'.$link.'">$link</a>';
+                ob_start();
+                ?>
+                <div class="text-center">
+                <h3><a href="<?php echo $link;?>"><span class="label label-primary">Tải về</span></a></h3>
+                <?php echo CEMSPluginPreferences::init()->error_messages->book_success_more;?>
+                </div>
+                <?php
+                $response->data=ob_get_clean();
             }
             else
                 $response->data=CEMSPluginPreferences::init()->error_messages->link_not_found;

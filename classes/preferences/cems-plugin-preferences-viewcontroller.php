@@ -331,6 +331,15 @@ class CEMSPreferencesCustomErrorsView extends WPDKPreferencesView
                         'value' => $error_messages->link_not_found
                     )
                 ),
+
+                array(
+                    array(
+                        'type'  => WPDKUIControlType::TEXTAREA,
+                        'name'  => CEMSPreferencesCustomErrorsBranch::BOOK_SUCCESS_MORE,
+                        'label' => __( 'Phần hướng dẫn thêm khi đăng ký xong', WPCEMS_TEXTDOMAIN ),
+                        'value' => $error_messages->book_success_more
+                    )
+                )
             )
         );
 

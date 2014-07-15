@@ -36,6 +36,7 @@ jQuery(document).ready(function ($) {
                     $alert.removeClass('alert-success').addClass('alert-danger');
                 }
                 $alert.children('.error-response').html(textResponse);
+                $alert.children('.book-title-result').text($('#book-title-request').text());
                 $alert.fadeIn('slow');
             }
         ).always(function(){
