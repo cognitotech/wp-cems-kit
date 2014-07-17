@@ -80,11 +80,11 @@ class CEMSPreviewEbook {
         <div class="panel panel-default cems-preview-ebook-panel">
             <div class="panel-body">
                 <button type="button" class="center-block btn btn-primary" data-toggle="collapse" data-target="#ebook-subscription">
-                    Tải về b đọc thử sách <span id="book-title-request"><?php echo $this->book_title;?></span> (giống sách in 100%)
+                    Tải về bản đọc thử sách <span id="book-title-request"><?php echo $this->book_title;?></span> (giống sách in 100%)
                 </button>
                 <p></p>
                 <div id="ebook-subscription" class="collapse">
-                    <p>Bạn đã đăng ký email để tải thông tin trên trang TGM Books chưa?</p>
+                    <p>Bạn đã đăng ký email để tải thông tin trên <?php wp_title('');?>chưa?</p>
                     <div class="alert alert-danger alert-dismissible" role="alert" id="cems-alert" style="display: none">
                         <button type="button" class="close" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span>
