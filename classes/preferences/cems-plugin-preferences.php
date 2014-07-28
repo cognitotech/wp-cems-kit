@@ -231,6 +231,8 @@ class CEMSPreferencesCustomErrorsBranch extends WPDKPreferencesBranch
     const ERROR_LIST_NOT_FOUND = 'wpcems_error_list_not_found';
     const ERROR_LINK_NOT_FOUND = 'wpcems_error_link_not_found';
     const BOOK_SUCCESS_MORE = 'wpcems_book_success_more';
+  	const ASK_REGISTER_EMAIL = 'wpcems_ask_register_email';
+  
     // Interface of preferences branch
 
     public $invalid_data;
@@ -240,6 +242,7 @@ class CEMSPreferencesCustomErrorsBranch extends WPDKPreferencesBranch
     public $list_not_found;
     public $link_not_found;
     public $book_success_more;
+  	public $ask_register_email;
 
     /**
      * Set the default preferences
@@ -257,6 +260,7 @@ class CEMSPreferencesCustomErrorsBranch extends WPDKPreferencesBranch
         $this->link_not_found = 'Không tìm thấy link tải ebook';
         $this->book_success_more = '<p><i>(Lưu ý: Đường dẫn chỉ tồn tại trong 2 tiếng)</i></p>
                 <p>Ebook này không có mật khẩu (password) nhưng để đọc được ebook bạn cần phải có Adobe Reader phiên bản 9.0 trở lên. Bạn có thể tải phần mềm <a href="http://get.adobe.com/reader/">tại đây</a></p>';
+      	$this->ask_register_email = 'Bạn đã đăng ký email để tải thông tin trên trang TGM chưa?';
     }
 
     /**
@@ -274,6 +278,7 @@ class CEMSPreferencesCustomErrorsBranch extends WPDKPreferencesBranch
         $this->list_not_found = balanceTags( $_POST[self::ERROR_LIST_NOT_FOUND] );
         $this->link_not_found = balanceTags( $_POST[self::ERROR_LINK_NOT_FOUND] );
         $this->book_success_more = balanceTags ( $_POST[self::BOOK_SUCCESS_MORE] );
+        $this->ask_register_email = balanceTags ( $_POST[self::ASK_REGISTER_EMAIL] );
     }
 
 }

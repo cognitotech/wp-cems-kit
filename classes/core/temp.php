@@ -80,11 +80,11 @@ class CEMSPreviewEbook {
         <div class="panel panel-default cems-preview-ebook-panel">
             <div class="panel-body">
                 <button type="button" class="center-block btn btn-primary" data-toggle="collapse" data-target="#ebook-subscription">
-                    <span id="book-title-request"><?php echo $this->book_title;?></span>
+                    Tải về bản đọc thử sách <span id="book-title-request"><?php echo $this->book_title;?></span> (giống sách in 100%)
                 </button>
                 <p></p>
                 <div id="ebook-subscription" class="collapse">
-                    <p><?php echo CEMSPluginPreferences::init()->error_messages->ask_register_email;?></p>
+                    <p>Bạn đã đăng ký email để tải thông tin trên trang <?php wp_title('');?> chưa?</p>
                     <div class="alert alert-danger alert-dismissible" role="alert" id="cems-alert" style="display: none">
                         <button type="button" class="close" data-dismiss="alert">
                             <span aria-hidden="true">&times;</span>
@@ -130,27 +130,24 @@ class CEMSPreviewEbook {
                                         <div class="form-group">
                                             <label for="customer-lname" class="col-sm-3 control-label"><?php echo __('
 Họ',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="customer-lname" name="customerLName" placeholder="<?php echo __('Nhập họ',WPCEMS_TEXTDOMAIN);?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="customer-fname" class="col-sm-3 control-label"><?php echo __('
 Tên',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-9">
                                                 <input type="text" class="form-control" id="customer-fname" name="customerFName" placeholder="<?php echo __('Nhập tên lót và tên',WPCEMS_TEXTDOMAIN);?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="customer-province" class="col-sm-3 control-label"><?php echo __('
 Tỉnh thành đang ở',WPCEMS_TEXTDOMAIN);?></label>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-9">
                                                 <select class="chosen-select" id="customer-province" name="customerProvince">
-                                                    <option value="Hà Nội">Hà Nội</option>
-                                                    <option value="Hồ Chí Minh" selected>TP Hồ Chí Minh</option>
-                                                    <option value="Đà Nẵng">Đà Nẵng</option>
-                                                    <option value="Vũng Tàu">Bà Rịa - Vũng Tàu</option>
                                                     <option value="An Giang">An Giang</option>
+                                                    <option value="Bà Rịa - Vũng Tàu">Bà Rịa - Vũng Tàu</option>
                                                     <option value="Bắc Cạn">Bắc Cạn</option>
                                                     <option value="Bắc Giang">Bắc Giang</option>
                                                     <option value="Bạc Liêu">Bạc Liêu</option>
@@ -163,6 +160,7 @@ Tỉnh thành đang ở',WPCEMS_TEXTDOMAIN);?></label>
                                                     <option value="Cà Mau">Cà Mau</option>
                                                     <option value="Cần Thơ">Cần Thơ</option>
                                                     <option value="Cao Bằng">Cao Bằng</option>
+                                                    <option value="Đà Nẵng">Đà Nẵng</option>
                                                     <option value="Đắk Lắk">Đắk Lắk</option>
                                                     <option value="Đắk Nông">Đắk Nông</option>
                                                     <option value="Điện Biên">Điện Biên</option>
@@ -171,10 +169,12 @@ Tỉnh thành đang ở',WPCEMS_TEXTDOMAIN);?></label>
                                                     <option value="Gia Lai">Gia Lai</option>
                                                     <option value="Hà Giang">Hà Giang</option>
                                                     <option value="Hà Nam">Hà Nam</option>
+                                                    <option value="Hà Nội">Hà Nội</option>
                                                     <option value="Hà Tĩnh">Hà Tĩnh</option>
                                                     <option value="Hải Dương">Hải Dương</option>
                                                     <option value="Hải Phòng">Hải Phòng</option>
                                                     <option value="Hậu Giang">Hậu Giang</option>
+                                                    <option value="Hồ Chí Minh" selected>TP Hồ Chí Minh</option>
                                                     <option value="Hòa Bình">Hòa Bình</option>
                                                     <option value="Hưng Yên">Hưng Yên</option>
                                                     <option value="Khánh Hoà">Khánh Hoà</option>
@@ -215,14 +215,14 @@ Tỉnh thành đang ở',WPCEMS_TEXTDOMAIN);?></label>
                                         <div class="form-group">
                                             <label for="customer-email" class="col-sm-3 control-label"><?php echo __('
 Địa chỉ email',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-9">
                                                 <input type="email" class="form-control" id="customer-email" name="customerEmail" placeholder="<?php echo __('Nhập địa chỉ email của bạn',WPCEMS_TEXTDOMAIN);?>" required>
                                             </div>
                                         </div>
                                         <div class="form-group">
                                             <label for="customer-phone" class="col-sm-3 control-label"><?php echo __('
 Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
-                                            <div class="col-sm-8">
+                                            <div class="col-sm-9">
                                                 <input type="tel" class="form-control" id="customer-phone" name="customerPhone" placeholder="<?php echo __('Nhập số điện thoại của bạn',WPCEMS_TEXTDOMAIN);?>">
                                             </div>
                                         </div>
@@ -231,7 +231,7 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                                 </div>
                                 <input type="hidden" class="hidden" name="listId" value="<?php echo $this->list_id;?>"/>
                                 <div class="form-group">
-                                    <div class="center-block">
+                                    <div class="col-sm-2 col-sm-offset-5">
                                         <button data-loading-text="Đang gửi ..." type="submit" class="center-block btn btn-primary" id="btn-new-customer"><?php echo __('Xác nhận',WPCEMS_TEXTDOMAIN);?></button>
                                     </div>
                                 </div>

@@ -291,7 +291,7 @@ class CEMSPreferencesCustomErrorsView extends WPDKPreferencesView
                     array(
                         'type'  => WPDKUIControlType::TEXT,
                         'name'  => CEMSPreferencesCustomErrorsBranch::ERROR_EMAIL_NOT_AVAILABLE,
-                        'label' => __( 'Lỗi email đã tồn t', WPCEMS_TEXTDOMAIN ),
+                        'label' => __( 'Lỗi email đã tồn tại', WPCEMS_TEXTDOMAIN ),
                         'value' => $error_messages->email_not_available
                     )
                 ),
@@ -339,7 +339,16 @@ class CEMSPreferencesCustomErrorsView extends WPDKPreferencesView
                         'label' => __( 'Phần hướng dẫn thêm khi đăng ký xong', WPCEMS_TEXTDOMAIN ),
                         'value' => $error_messages->book_success_more
                     )
-                )
+                ),
+
+                array(
+                    array(
+                        'type'  => WPDKUIControlType::TEXT,
+                        'name'  => CEMSPreferencesCustomErrorsBranch::ASK_REGISTER_EMAIL,
+                        'label' => __( 'Lời mời đăng ký email', WPCEMS_TEXTDOMAIN ),
+                        'value' => $error_messages->ask_register_email
+                    )
+            		)
             )
         );
 

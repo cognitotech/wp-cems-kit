@@ -76,26 +76,31 @@ if ( wpdk_is_ajax() ) {
             $listId = intval($_POST['listId']);
             $customer_email = sanitize_email($_POST['customerEmail']);
             $phone = sanitize_text_field($_POST['customerPhone']);
-            $full_name= sanitize_text_field($_POST['customerName']);
+            $first_name= sanitize_text_field($_POST['customerFName']);
+          	$last_name= sanitize_text_field($_POST['customerLName']);
             //specific guessing based on the fact that the current TGMBooks using numeric value
             $province = sanitize_text_field($_POST['customerProvince']);
-            $reading=array_map('sanitize_text_field',$_POST['customerReading']);
             //create customer
             try {
                 $customer=$this->callCEMSApi('POST',
                     '/admin/customers.json',
                     array(
                         'email' => $customer_email,
-                        'full_name' => $full_name,
+                        'first_name' => $first_name,
+                      	'last_name' => $last_name,
                         'phone'=>$phone,
-                        'place'=>$province,
-                        'loai_sach'=>$reading,
+                        'city'=>$province,
+                      	'like_books' => 'Thích'
                     )
                 )->getObject('CEMS\Customer');
             }
             catch(CEMS\BaseException $e)
             {
-                //$response->error='Error when Create Customer: '.$e;
+                if (strpos((string)$e,'email')==FALSE)
+                {
+                    $response->error='Lỗi khi đăng ký: '.$e->getFormattedMessage();
+                    $response->json();
+                }
                 try {
                     $customer=$this->callCEMSApi('GET',
                         '/admin/customers/find_by.json',
@@ -106,7 +111,7 @@ if ( wpdk_is_ajax() ) {
                 }
                 catch(CEMS\BaseException $e)
                 {
-                    $response->error = '[ErrorCodeCCG]'.'Lỗi đường truyền, xin thử lại';
+                    $response->error = 'Lỗi khi đăng ký: '.$e->getFormattedMessage();
                     $response->json();
                 }
                 if (isset($customer))
@@ -114,10 +119,11 @@ if ( wpdk_is_ajax() ) {
                         $update_customer=$this->callCEMSApi('PUT',
                             '/admin/customers/'.$customer->id.'.json',
                             array(
-                                'full_name' => $full_name,
+			'first_name' => $first_name,
+			'last_name' => $last_name,
                                 'phone'=>$phone,
-                                'place'=>$province,
-                                'loai_sach'=>$reading,
+                        'city'=>$province,
+                        'like_books' => 'Thích'
                             )
                         )->getObject('CEMS\Customer');
                     }

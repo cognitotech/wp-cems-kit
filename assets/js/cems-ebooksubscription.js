@@ -78,10 +78,17 @@ jQuery(document).ready(function ($) {
             CEMSAjaxCall(submitButton, 'register_new_customer_action', form);
         },
         fields: {
-            customerName: {
+            customerFName: {
                 validators: {
                     notEmpty:{
-                        message:'Họ và tên không được để trống'
+                        message:'Họ không được để trống'
+                    }
+                }
+            },
+	          customerLName: {
+                validators: {
+                    notEmpty:{
+                        message:'Tên không được để trống'
                     }
                 }
             },
