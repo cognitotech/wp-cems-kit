@@ -371,7 +371,7 @@ if ( wpdk_is_ajax() ) {
             $event_register=null;
             try {
                 $event_register = $this->callCEMSApi('GET',
-                    '/admin/events/find_by.json',
+                    '/admin/event_registers/find_by.json',
                     array(
                         'customer_id'=>$customer->id,
                         'event_id'=>$eventId
@@ -391,7 +391,7 @@ if ( wpdk_is_ajax() ) {
                 //register a event for customer
                 try{
                     $event_register=$this->callCEMSApi('POST',
-                        '/admin/events.json',
+                        '/admin/event_registers.json',
                         array(
                             'customer_id'=>$customer->id,
                             'event_id'=>$eventId,
