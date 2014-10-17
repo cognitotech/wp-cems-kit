@@ -1,7 +1,7 @@
 <?php
 /**
 * CEMS Event 17 Shortcode
-* [cems_event17]
+* [cems_event17 id='17']
 *
 * @class              CEMSEvent17Shortcode
 * @author             pnghai <nguyenhai@siliconstraits.vn>
@@ -58,6 +58,10 @@ class CEMSEvent17Shortcode extends WPDKShortcode {
     /**
      * Display the event form with its full function
      *
+     *     $defaults = array(
+     *      'id' => -1
+     *     );
+     *
      * @brief Display the event form
      *
      * @param array       $attributes    Attribute into the shortcode
@@ -65,6 +69,12 @@ class CEMSEvent17Shortcode extends WPDKShortcode {
      * @return string
      */
     function cems_event17( $attributes ) {
+        $output = '';
+        $defaults = array(
+            'id' => -1
+        );
+
+        $attributes = shortcode_atts( $defaults, $attributes, 'cems_event17' );
         $formContent = new CEMSEvent17($attributes);
         $output  = $formContent->html();
 	    return $output;
