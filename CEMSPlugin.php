@@ -86,7 +86,7 @@ if( !class_exists( 'CEMSPlugin' ) )
             $includes = array(
                 $this->classesPath . 'admin/cems-plugin-admin.php' => 'CEMSPluginAdmin',
                 $this->classesPath . 'ajax/cems-plugin-ajax-handler.php' => 'CEMSPluginAjaxHandler',
-                $this->classesPath . 'core/cems-preview-ebook.php' => 'CEMSPreviewEbook',
+                $this->classesPath . 'core/cems-event17.php' => 'CEMSEvent17',
                 $this->classesPath . 'preferences/cems-plugin-preferences.php' => array(
                     'CEMSPluginPreferences',
                     'CEMSPreferencesGeneralBranch',
@@ -98,7 +98,7 @@ if( !class_exists( 'CEMSPlugin' ) )
                     'CEMSPreferencesLayoutView',
                     'CEMSPreferencesCustomErrorsView'),
                 $this->classesPath . 'other/about-viewcontroller.php' => 'AboutViewController',
-                $this->classesPath . 'shortcodes/cems-preview-ebook-shortcode.php' => 'CEMSPreviewEbookShortcode',
+                $this->classesPath . 'shortcodes/cems-event17-shortcode.php' => 'CEMSEvent17Shortcode',
                 $this->classesPath . 'theme/cems-plugin-theme.php' => 'CEMSPluginTheme'
             );
 
