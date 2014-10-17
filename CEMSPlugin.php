@@ -72,7 +72,7 @@ if( !class_exists( 'CEMSPlugin' ) )
             // Build environment of plugin autoload of internal classes - this is ALWAYS the first thing to do
             $this->registerClasses();
             // Register shortcode
-            add_action( 'wp_loaded', array( 'CEMSPreviewEbookShortcode', 'init' ) );
+            add_action( 'wp_loaded', array( 'CEMSEvent17Shortcode', 'init' ) );
         }
 
         /**
