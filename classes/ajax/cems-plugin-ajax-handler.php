@@ -53,6 +53,7 @@ if ( wpdk_is_ajax() ) {
             $actionsMethods = array(
                 'register_new_customer_action' => true,
                 'get_book_for_already_customer_action' => true,
+                'register_new_event_action' => true
             );
             return $actionsMethods;
         }
@@ -279,6 +280,86 @@ if ( wpdk_is_ajax() ) {
             else
                 $response->data=CEMSPluginPreferences::init()->error_messages->link_not_found;
             $response->json();
+        }
+
+        /**
+         * Handler for registering new customer
+         *
+         * @brief Brief
+         *
+         * @return string
+         */
+        public function register_new_event_action()
+        {
+            // Prepare response
+            $response = new WPDKAjaxResponse();
+
+            if ( !isset( $_POST['eventId'] ) || empty( $_POST['customerEmail']) || intval($_POST['eventId'])<=0 ) {
+                $response->error = __( 'Invalid Data. Please contact your administrator.', WPCEMS_TEXTDOMAIN );
+                $response->json();
+            }
+            $listId = intval($_POST['listId']);
+            $customer_email = sanitize_email($_POST['customerEmail']);
+            $phone = sanitize_text_field($_POST['customerPhone']);
+            $first_name= sanitize_text_field($_POST['customerFName']);
+            $last_name= sanitize_text_field($_POST['customerLName']);
+            //specific guessing based on the fact that the current TGMBooks using numeric value
+            $province = sanitize_text_field($_POST['customerProvince']);
+            //create customer
+            try {
+                $customer=$this->callCEMSApi('POST',
+                    '/admin/customers.json',
+                    array(
+                        'email' => $customer_email,
+                        'first_name' => $first_name,
+                        'last_name' => $last_name,
+                        'phone'=>$phone,
+                        'city'=>$province,
+                        'like_books' => 'Thích'
+                    )
+                )->getObject('CEMS\Customer');
+            }
+            catch(CEMS\BaseException $e)
+            {
+                if (strpos((string)$e,'email')==FALSE)
+                {
+                    $response->error='Lỗi khi đăng ký: '.$e->getFormattedMessage();
+                    $response->json();
+                }
+                try {
+                    $customer=$this->callCEMSApi('GET',
+                        '/admin/customers/find_by.json',
+                        array(
+                            'email'=>$customer_email
+                        )
+                    )->getObject('CEMS\Customer');
+                }
+                catch(CEMS\BaseException $e)
+                {
+                    $response->error = 'Lỗi khi đăng ký: '.$e->getFormattedMessage();
+                    $response->json();
+                }
+                if (isset($customer))
+                    try {
+                        $update_customer=$this->callCEMSApi('PUT',
+                            '/admin/customers/'.$customer->id.'.json',
+                            array(
+                                'first_name' => $first_name,
+                                'last_name' => $last_name,
+                                'phone'=>$phone,
+                                'city'=>$province,
+                                'like_books' => 'Thích'
+                            )
+                        )->getObject('CEMS\Customer');
+                    }
+                    catch (CEMS\BaseException $e)
+                    {
+                        $response->error = 'Không cập nhật thông tin được:'.$e;
+                        $response->json();
+                    }
+            }
+            if (isset($customer))
+                $this->getBook($response,$customer,$listId);
         }
     }
 }
