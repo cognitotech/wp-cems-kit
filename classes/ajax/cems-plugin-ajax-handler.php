@@ -283,7 +283,7 @@ if ( wpdk_is_ajax() ) {
         }
 
         /**
-         * Handler for registering new customer
+         * Handler for registering new customer to an event
          *
          * @brief Brief
          *
@@ -294,28 +294,24 @@ if ( wpdk_is_ajax() ) {
             // Prepare response
             $response = new WPDKAjaxResponse();
 
-            if ( !isset( $_POST['eventId'] ) || empty( $_POST['customerEmail']) || intval($_POST['eventId'])<=0 ) {
+            if ( !isset( $_POST['eventId'] ) || empty( $_POST['customer_email']) || intval($_POST['eventId'])<=0 ) {
                 $response->error = __( 'Invalid Data. Please contact your administrator.', WPCEMS_TEXTDOMAIN );
                 $response->json();
             }
-            $listId = intval($_POST['listId']);
-            $customer_email = sanitize_email($_POST['customerEmail']);
-            $phone = sanitize_text_field($_POST['customerPhone']);
-            $first_name= sanitize_text_field($_POST['customerFName']);
-            $last_name= sanitize_text_field($_POST['customerLName']);
-            //specific guessing based on the fact that the current TGMBooks using numeric value
-            $province = sanitize_text_field($_POST['customerProvince']);
+            $eventId = intval($_POST['eventId']);
+            $customer_email = sanitize_email($_POST['customer_email']);
+            $phone = sanitize_text_field($_POST['customer_phone']);
+            $full_name = sanitize_text_field($_POST['customer_fullname']);
+            $birthday = sanitize_text_field($_POST['customer_birthday']);
             //create customer
             try {
                 $customer=$this->callCEMSApi('POST',
                     '/admin/customers.json',
                     array(
                         'email' => $customer_email,
-                        'first_name' => $first_name,
-                        'last_name' => $last_name,
-                        'phone'=>$phone,
-                        'city'=>$province,
-                        'like_books' => 'Thích'
+                        'full_name' => $full_name,
+                        'birthday' => $birthday,
+                        'phone'=> $phone
                     )
                 )->getObject('CEMS\Customer');
             }
@@ -344,11 +340,9 @@ if ( wpdk_is_ajax() ) {
                         $update_customer=$this->callCEMSApi('PUT',
                             '/admin/customers/'.$customer->id.'.json',
                             array(
-                                'first_name' => $first_name,
-                                'last_name' => $last_name,
-                                'phone'=>$phone,
-                                'city'=>$province,
-                                'like_books' => 'Thích'
+                                'full_name' =>  $full_name,
+                                'phone'     =>  $phone,
+                                'birthday'  =>  $birthday
                             )
                         )->getObject('CEMS\Customer');
                     }
@@ -359,7 +353,70 @@ if ( wpdk_is_ajax() ) {
                     }
             }
             if (isset($customer))
-                $this->getBook($response,$customer,$listId);
+                $this->event_register($response,$customer,$eventId);
+        }
+
+        /**
+         * Helper Register customer to an event
+         * @param $response WPDKAJAXResponse Object
+         * @param $customer Object as CEMS\Customer
+         * @param $eventId int
+         */
+        public function event_register($response=null,$customer=null,$eventId=-1)
+        {
+
+            $why_know = sanitize_text_field($_POST['event_register_source']);
+            $utm_source = sanitize_text_field($_POST['customer_source']);
+            //check subscription registered yet?
+            $event_register=null;
+            try {
+                $event_register = $this->callCEMSApi('GET',
+                    '/admin/events/find_by.json',
+                    array(
+                        'customer_id'=>$customer->id,
+                        'event_id'=>$eventId
+                    )
+                );
+            }
+            catch (CEMS\BaseException $e) {
+                if ($e->getCode()!='404') //we find the not found status, if we got anything else, it means DOOM
+                {
+                    $response->error='Lỗi '.$e->getCode().' khi đăng ký event. Xin liên hệ admin';
+                    $response->json();
+                }
+            }
+
+            if ($event_register==null)
+            {
+                //register a event for customer
+                try{
+                    $event_register=$this->callCEMSApi('POST',
+                        '/admin/events.json',
+                        array(
+                            'customer_id'=>$customer->id,
+                            'event_id'=>$eventId,
+                            'why_you_know' => $why_know,
+                            'customer_source'=>$utm_source,
+                            'status'=>'confirmed' // tell CEMS server not require user to confirm their emails
+                        )
+                    );
+                }
+
+                catch (CEMS\BaseException $e){
+                    //cannot make new Event Registration, kidding?
+                    $response->error='Không thể đăng ký sự kiện. Xin liên hệ admin';
+                    $response->json();
+                }
+
+                $response->message='Bạn đã đăng ký thành công. Xin kiểm tra email '.$customer->email;
+                $response->json();
+            }
+            else
+            {
+                $response->message='Bạn đã đăng ký rồi! Xin kiểm tra lại email '.$customer->email. 'để biết thêm thông tin';
+                $response->json();
+            }
+
         }
     }
 }
