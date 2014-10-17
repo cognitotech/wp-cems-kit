@@ -65,7 +65,7 @@ class CEMSEvent17Shortcode extends WPDKShortcode {
      * @return string
      */
     function cems_event17( $attributes ) {
-        $formContent = new CEMSEvent17();
+        $formContent = new CEMSEvent17($attributes);
         $output  = $formContent->html();
 	    return $output;
     }
