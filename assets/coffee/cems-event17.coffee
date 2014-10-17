@@ -4,8 +4,6 @@ jQuery.noConflict()
   #bootstrap fix noConflict with jquery-ui
   bootstrapButton = $.fn.button.noConflict() # return $.fn.button to previously assigned value
   $.fn.bootstrapBtn = bootstrapButton # give $().bootstrapBtn the Bootstrap functionality
-  datepicker = $.fn.datepicker.noConflict() # return $.fn.datepicker to previously assigned value
-  $.fn.bootstrapDP = datepicker
 
   return
 ) jQuery
@@ -38,11 +36,31 @@ jQuery(document).ready ($) ->
 
     return
 
-  $("#event17-form").bootstrapValidator
-    message: "Giá trị không hợp lệ"
+  #form validation
+  $("#event17-form").bootstrapValidator(
+    fields:
+      customer_birthday:
+        validators:
+          trigger: 'change keyup'
+          callback:
+            message: "Bạn phải ít nhất 10 tuổi",
+            callback: (value,validator) ->
+              m = new moment(value,"DD-MM-YYYY",true)
+              return false unless m.isValid()
+              age = moment().diff(m, 'years')
+              age >= 10
 
-    submitHandler: (validator, form, submitButton) ->
-      CEMSAjaxCall submitButton, "register_new_event_action", form
-      return
+  ).on 'success.form.bv', (e) ->
+
+    e.preventDefault()
+    $form = $(e.target)
+    CEMSAjaxCall $form.find('[type=submit]:not(.bv-hidden-submit)'), "register_new_event_action", $form
+    return
+  $("#customer-birthday").datepicker(
+    autoclose:"true"
+  ).on "changeDate show", (e) ->
+    # Revalidate the date when user change it
+    $("#event17-form").bootstrapValidator "revalidateField", "customer_birthday"
+    return
 
   return
