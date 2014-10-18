@@ -68,8 +68,9 @@ class CEMSPluginTheme extends WPDKWordPressTheme{
         wp_enqueue_script( 'wpcems-moment', '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.8.3/moment.min.js', array(), false, true );
         wp_enqueue_script( 'wpcems-bootstrapvalidator', '//cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js', array( 'wpcems-bootstrap','wpcems-moment' ), false, true );
         wp_enqueue_script( 'wpcems-chosen', '//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js', array( 'jquery' ), false, true );
+        wp_enqueue_script( 'wpcems-scrollTo', WPCEMS_URL_JAVASCRIPT . 'jquery.scrollTo.min.js', array( 'jquery' ), false, true );
         wp_enqueue_script( 'wpcems-customer_source', WPCEMS_URL_JAVASCRIPT . 'customer_source.min.js', array( 'jquery' ), false, true );
-        wp_enqueue_script( 'wpcems-event17', WPCEMS_URL_JAVASCRIPT . 'cems-event17.min.js', array( 'wpcems-bootstrapvalidator','wpcems-bootstrap-datepicker'), false, true );
+        wp_enqueue_script( 'wpcems-event17', WPCEMS_URL_JAVASCRIPT . 'cems-event17.js', array( 'wpcems-bootstrapvalidator','wpcems-bootstrap-datepicker'), false, true );
 
         wp_enqueue_style( 'wpcems-bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css',array(),false);
 
