@@ -75,15 +75,25 @@ class CEMSEvent17 {
                     <div class="form-group">
                         <label for="customer-email" class="col-sm-3 control-label"><?php echo __('
 Địa chỉ email',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
-                        <div class="col-sm-8">
+                        <div class="col-sm-6">
                             <input type="email" class="form-control" id="customer-email" name="customer_email" placeholder="<?php echo __('Nhập địa chỉ email của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
                                    data-bv-notempty-message="Bạn cần điền email"
 
                                    data-bv-emailaddress="true"
                                    data-bv-emailaddress-message="Email không hợp lệ">
                         </div>
+                        <div class="col-sm-3">
+                            <button type="button" class="btn btn-default btn-check-exist" data-loading-text="Xin chờ ..." >Kiểm tra</button>
+                        </div>
                     </div>
-
+                    <div class="form-group">
+                        <div class="col-sm-12">
+                            Nếu bạn đã từng đăng ký với chúng tôi, bạn chỉ cần điền email, những thông tin khác sẽ được tự động điền giúp bạn.
+                        </div>
+                    </div>
+                    <div class="alert alert-danger" role="alert" id="cems-notify-customer" style="display: none">
+                        <div class="error-response"></div>
+                    </div>
                     <div class="form-group">
                         <label for="customer-fullname" class="col-sm-3 control-label"><?php echo __('
 Họ Tên',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
@@ -164,8 +174,9 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                         <strong>Ghi chú:</strong> Chúng tôi sẽ gửi thông tin đến địa chỉ email mà bạn đăng ký. Vui lòng nhập email chính xác.
                     </div>
                     <div class="form-group">
-                        <div class="center-block">
-                            <button data-loading-text="Đang gửi ..." type="submit" class="center-block btn btn-primary" id="btn-new-customer"><?php echo __('Xác nhận',WPCEMS_TEXTDOMAIN);?></button>
+                        <div class="text-center">
+                            <button data-loading-text="Đang gửi ..." type="submit" class="btn btn-primary" id="btn-new-customer" ><?php echo __('Xác nhận',WPCEMS_TEXTDOMAIN);?></button>
+                            <button class="btn btn-default btn-reset"><?php echo __('Reset',WPCEMS_TEXTDOMAIN);?></button>
                         </div>
                     </div>					
 					<div class="alert alert-danger alert-dismissible" role="alert" id="cems-alert" style="display: none">
