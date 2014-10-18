@@ -66,13 +66,6 @@ class CEMSEvent17 {
         ?>
         <div class="panel panel-default cems-event17-panel">
             <div class="panel-body">
-                <div class="alert alert-danger alert-dismissible" role="alert" id="cems-alert" style="display: none">
-                    <button type="button" class="close" data-dismiss="alert">
-                        <span aria-hidden="true">&times;</span>
-                        <span class="sr-only">Đóng</span>
-                    </button>
-                    <div class="error-response"></div>
-                </div>
                 <form role="form" name="event17-form" id='event17-form' method="post" class="form-horizontal" data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
                       data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
                       data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
@@ -174,7 +167,14 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                         <div class="center-block">
                             <button data-loading-text="Đang gửi ..." type="submit" class="center-block btn btn-primary" id="btn-new-customer"><?php echo __('Xác nhận',WPCEMS_TEXTDOMAIN);?></button>
                         </div>
-                    </div>
+                    </div>					
+					<div class="alert alert-danger alert-dismissible" role="alert" id="cems-alert" style="display: none">
+						<button type="button" class="close" data-dismiss="alert">
+							<span aria-hidden="true">&times;</span>
+							<span class="sr-only">Đóng</span>
+						</button>
+						<div class="error-response"></div>
+					</div>
                 </form>
             </div>
         </div>
