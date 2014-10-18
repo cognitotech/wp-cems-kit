@@ -408,12 +408,12 @@ if ( wpdk_is_ajax() ) {
                     $response->json();
                 }
 
-                $response->message='Bạn đã đăng ký thành công. Xin kiểm tra email '.$customer->email;
+                $response->message='Thông tin đăng ký của bạn đã gửi thành công. Life Coaching Vietnam sẽ liên hệ xác nhận trong vòng 48 tiếng đồng hồ';
                 $response->json();
             }
             else
             {
-                $response->message='Bạn đã đăng ký rồi! Xin kiểm tra lại email '.$customer->email. 'để biết thêm thông tin';
+                $response->error='Bạn đã đăng ký rồi! Xin kiểm tra lại email <a href="mailto:'.$customer->email.'">'.$customer->email. '</a> để biết thêm thông tin.';
                 $response->json();
             }
 
