@@ -53,7 +53,8 @@ if ( wpdk_is_ajax() ) {
             $actionsMethods = array(
                 'register_new_customer_action' => true,
                 'get_book_for_already_customer_action' => true,
-                'register_new_event_action' => true
+                'register_new_event_action' => true,
+                'get_customer_existed_action' => true
             );
             return $actionsMethods;
         }
@@ -335,22 +336,6 @@ if ( wpdk_is_ajax() ) {
                     $response->error = 'Lỗi khi đăng ký: '.$e->getFormattedMessage();
                     $response->json();
                 }
-                if (isset($customer))
-                    try {
-                        $update_customer=$this->callCEMSApi('PUT',
-                            '/admin/customers/'.$customer->id.'.json',
-                            array(
-                                'full_name' =>  $full_name,
-                                'phone'     =>  $phone,
-                                'birthday'  =>  $birthday
-                            )
-                        )->getObject('CEMS\Customer');
-                    }
-                    catch (CEMS\BaseException $e)
-                    {
-                        $response->error = 'Không cập nhật thông tin được:'.$e;
-                        $response->json();
-                    }
             }
             if (isset($customer))
                 $this->event_register($response,$customer,$eventId);
@@ -408,7 +393,7 @@ if ( wpdk_is_ajax() ) {
                     $response->json();
                 }
 
-                $response->message='Thông tin đăng ký của bạn đã gửi thành công. Life Coaching Vietnam sẽ liên hệ xác nhận trong vòng 48 tiếng đồng hồ';
+                $response->message='Thông tin đăng ký của bạn đã gửi thành công. Life Coaching Vietnam sẽ liên hệ xác nhận trong vòng 48 tiếng đồng hồ.';
                 $response->json();
             }
             else
@@ -417,6 +402,42 @@ if ( wpdk_is_ajax() ) {
                 $response->json();
             }
 
+        }
+
+        /**
+         * Handler for get existed customer
+         *
+         * @brief Brief
+         *
+         * @return string
+         */
+        public function get_customer_existed_action()
+        {
+            // Prepare response
+            $response = new WPDKAjaxResponse();
+            if (empty( $_POST['customer_email']) ) {
+                $response->error = __( 'Invalid Data. Please contact your administrator.', WPCEMS_TEXTDOMAIN );
+                $response->json();
+            }
+            $customer_email = sanitize_email($_POST['customer_email']);
+            try {
+                $customer=$this->callCEMSApi('GET',
+                    '/admin/customers/find_by.json',
+                    array(
+                        'email'=>$customer_email
+                    )
+                )->getObject('CEMS\Customer');
+            }
+            catch(CEMS\BaseException $e)
+            {
+                $response->error = 'Email này chưa đăng ký trên hệ thống.';
+                $response->json();
+            }
+            if (isset($customer)):
+                $response->message = "Email này đã đăng ký trên hệ thống.";
+                $response->data = json_encode($customer->toArray());
+                $response->json();
+            endif;
         }
     }
 }
