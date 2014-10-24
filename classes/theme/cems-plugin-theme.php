@@ -59,6 +59,7 @@ class CEMSPluginTheme extends WPDKWordPressTheme{
      */
     public function wp_enqueue_scripts()
     {
+        if (!is_single()) return;
         wp_enqueue_script( 'wpcems-browser', '//cdnjs.cloudflare.com/ajax/libs/jquery-browser/0.0.6/jquery.browser.min.js', array('jquery'), false, true );
         wp_enqueue_script( 'wpcems-migrate', '//code.jquery.com/jquery-migrate-1.2.1.min.js', array('jquery'), false, true );
         // Added styles and script for frontend
@@ -72,8 +73,9 @@ class CEMSPluginTheme extends WPDKWordPressTheme{
         wp_enqueue_script( 'wpcems-customer_source', WPCEMS_URL_JAVASCRIPT . 'customer_source.min.js', array( 'jquery' ), false, true );
         wp_enqueue_script( 'wpcems-event17', WPCEMS_URL_JAVASCRIPT . 'cems-event17.js', array( 'wpcems-bootstrapvalidator','wpcems-bootstrap-datepicker'), false, true );
 
-        wp_enqueue_style( 'wpcems-bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css',array(),false);
-
+        //wp_enqueue_style( 'wpcems-bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css',array('open-sans'),false);
+        if ( wpdk_is_bool( CEMSPluginPreferences::init()->layout->load_bootstrap ) )
+            wp_enqueue_style( 'wpcems-bootstrap', '//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css', array(),false);
         wp_enqueue_style( 'wpcems-theme', WPCEMS_URL_CSS . 'cems-theme.css', array(),false);
         wp_enqueue_style( 'wpcems-chosen', '//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.min.css',array(),false);
         wp_enqueue_style( 'wpcems-bootstrap-chosen', WPCEMS_URL_CSS . 'bootstrap-chosen.min.css', array(),false);
