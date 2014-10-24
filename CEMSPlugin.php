@@ -89,7 +89,7 @@ if( !class_exists( 'CEMSPlugin' ) )
                 $this->classesPath . 'admin/cems-plugin-admin.php' => 'CEMSPluginAdmin',
                 $this->classesPath . 'ajax/cems-plugin-ajax-handler.php' => 'CEMSPluginAjaxHandler',
                 $this->classesPath . 'core/cems-event17.php' => 'CEMSEvent17',
-                $this->classesPath . 'core/cems-event17.php' => 'CEMSPreviewEbook',
+                $this->classesPath . 'core/cems-preview-ebook.php' => 'CEMSPreviewEbook',
                 $this->classesPath . 'preferences/cems-plugin-preferences.php' => array(
                     'CEMSPluginPreferences',
                     'CEMSPreferencesGeneralBranch',
