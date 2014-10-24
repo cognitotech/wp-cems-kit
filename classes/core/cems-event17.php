@@ -87,7 +87,7 @@ class CEMSEvent17 {
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-sm-12">
+                        <div class="col-sm-12 text-center">
                             Nếu bạn đã từng đăng ký với chúng tôi, bạn chỉ cần điền email, những thông tin khác sẽ được tự động điền giúp bạn.
                         </div>
                     </div>
@@ -171,12 +171,12 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                     </div>
 
                     <div class="alert alert-warning" role="alert">
-                        <strong>Ghi chú:</strong> Chúng tôi sẽ gửi thông tin đến địa chỉ email mà bạn đăng ký. Vui lòng nhập email chính xác.
+                        <strong>Bạn nhớ nha:</strong>  Life Coaching Vietnam sẽ gửi thông tin đến địa chỉ email bạn đăng ký. Vui lòng nhập email chính xác.
                     </div>
                     <div class="form-group">
                         <div class="text-center">
-                            <button data-loading-text="Đang gửi ..." type="submit" class="btn btn-primary" id="btn-new-customer" ><?php echo __('Xác nhận',WPCEMS_TEXTDOMAIN);?></button>
-                            <button class="btn btn-default btn-reset"><?php echo __('Reset',WPCEMS_TEXTDOMAIN);?></button>
+                            <button data-loading-text="Đang gửi ..." type="submit" class="btn btn-primary" id="btn-new-customer" ><?php echo __('Gửi',WPCEMS_TEXTDOMAIN);?></button>
+                            <button class="btn btn-default btn-reset"><?php echo __('Điền lại',WPCEMS_TEXTDOMAIN);?></button>
                         </div>
                     </div>					
 					<div class="alert alert-danger alert-dismissible" role="alert" id="cems-alert" style="display: none">
