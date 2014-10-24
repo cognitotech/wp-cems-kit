@@ -212,6 +212,14 @@ class CEMSPreferencesLayoutView extends WPDKPreferencesView {
                 array(
                     array(
                         'type'  => WPDKUIControlType::SWIPE,
+                        'name'  => CEMSPreferencesLayoutBranch::BOOTSTRAP_ENABLED,
+                        'label' => __( "Kích hoạt Twitter's Boostrap", WPCEMS_TEXTDOMAIN ),
+                        'value' => $layout->load_bootstrap
+                    )
+                ),
+                array(
+                    array(
+                        'type'  => WPDKUIControlType::SWIPE,
                         'name'  => CEMSPreferencesLayoutBranch::CSS_STYLE_ENABLED,
                         'label' => __( 'Kích hoạt', WPCEMS_TEXTDOMAIN ),
                         'value' => $layout->css_style_enabled

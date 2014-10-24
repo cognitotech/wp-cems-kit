@@ -167,14 +167,24 @@ class CEMSPreferencesLayoutBranch extends WPDKPreferencesBranch {
 
     const CSS_STYLE          = 'wpcems_css_style';
     const CSS_STYLE_ENABLED  = 'wpcems_css_style_enabled';
+    const BOOTSTRAP_ENABLED  = 'wpcems_bootstrap_enabled';
     const PRESET_ORIENTATION = 'wpcems_preset_orientation';
+
+    /**
+     * Enabled the Twitter's Bootstrap
+     *
+     * @brief Enabled
+     *
+     * @var bool $load_bootstrap
+     */
+    public $load_bootstrap;
 
     /**
      * Enabled the CSS inline style
      *
      * @brief Enabled
      *
-     * @var string $css_style_enabled
+     * @var bool $css_style_enabled
      */
     public $css_style_enabled;
 
@@ -196,6 +206,7 @@ class CEMSPreferencesLayoutBranch extends WPDKPreferencesBranch {
     {
         $this->css_style          = file_get_contents( WPCEMS_PATH_CSS . 'cems-default-inline-style.css' );
         $this->css_style_enabled  = 'off';
+        $load_bootstrap = 'off';
     }
 
     /**
@@ -207,6 +218,7 @@ class CEMSPreferencesLayoutBranch extends WPDKPreferencesBranch {
     {
         $this->css_style          = esc_attr( $_POST[self::CSS_STYLE] );
         $this->css_style_enabled  = esc_attr( $_POST[self::CSS_STYLE_ENABLED] );
+        $this->load_bootstrap  = esc_attr( $_POST[self::BOOTSTRAP_ENABLED] );
     }
 }
 
