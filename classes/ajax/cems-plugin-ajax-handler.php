@@ -52,7 +52,7 @@ if ( wpdk_is_ajax() ) {
         {
             $actionsMethods = array(
                 'register_new_customer_action' => true,
-                'get_book_for_already_customer_action' => true,
+                'subscribe_form' => true,
                 'register_new_event_action' => true,
                 'get_customer_existed_action' => true
             );

@@ -73,7 +73,7 @@ if( !class_exists( 'CEMSPlugin' ) )
             $this->registerClasses();
             // Register shortcode
             add_action( 'wp_loaded', array( 'CEMSEvent17Shortcode', 'init' ) );
-            add_action( 'wp_loaded', array( 'CEMSPreviewEbookShortcode', 'init' ) );
+            add_action( 'wp_loaded', array( 'CEMSSubscribeFormShortcode', 'init' ) );
             WPDKUIComponents::init()->enqueue( array( WPDKUIComponents::MODAL, WPDKUIComponents::TOOLTIP ));
         }
 
@@ -89,7 +89,8 @@ if( !class_exists( 'CEMSPlugin' ) )
                 $this->classesPath . 'admin/cems-plugin-admin.php' => 'CEMSPluginAdmin',
                 $this->classesPath . 'ajax/cems-plugin-ajax-handler.php' => 'CEMSPluginAjaxHandler',
                 $this->classesPath . 'core/cems-event17.php' => 'CEMSEvent17',
-                $this->classesPath . 'core/cems-preview-ebook.php' => 'CEMSPreviewEbook',
+                $this->classesPath . 'core/cems-subscribe13.php' => 'CEMSSubscribeForm13',
+                $this->classesPath . 'core/cems-subscribe15.php' => 'CEMSSubscribeForm15',
                 $this->classesPath . 'preferences/cems-plugin-preferences.php' => array(
                     'CEMSPluginPreferences',
                     'CEMSPreferencesGeneralBranch',
@@ -102,7 +103,7 @@ if( !class_exists( 'CEMSPlugin' ) )
                     'CEMSPreferencesCustomErrorsView'),
                 $this->classesPath . 'other/about-viewcontroller.php' => 'AboutViewController',
                 $this->classesPath . 'shortcodes/cems-event17-shortcode.php' => 'CEMSEvent17Shortcode',
-                $this->classesPath . 'shortcodes/cems-preview-ebook-shortcode.php' => 'CEMSPreviewEbookShortcode',
+                $this->classesPath . 'shortcodes/cems-subscribe-form-shortcode.php' => 'CEMSSubscribeFormShortcode',
                 $this->classesPath . 'theme/cems-plugin-theme.php' => 'CEMSPluginTheme'
             );
 
