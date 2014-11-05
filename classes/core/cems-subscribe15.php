@@ -64,19 +64,19 @@ class CEMSSubscribeForm15 {
     {
         WPDKHTML::startCompress();
         ?>
-        <div class="panel panel-default cems-subscribe13-panel">
+        <div class="panel panel-default cems-subscription15-panel">
             <div class="panel-body">
-                <form role="form" name="subscribe13-form" id='subscribe13-form' method="post" class="form-horizontal" data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                <form role="form" name="subscription15-form" id='subscription15-form' method="post" class="form-horizontal" data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
                       data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
                       data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
-                    <input type="hidden" value="<?php echo $this->list_id;?>" name="subscription[subscriber_list_id]">
-                    <input type="hidden" value="" name="subscription[customer_source]">
+                    <input type="hidden" value="<?php echo $this->list_id;?>" name="eventId">
+                    <input type="hidden" value="" name="customer_source">
 
                     <div class="form-group">
                         <label for="customer-email" class="col-sm-3 control-label"><?php echo __('
 Địa chỉ email',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
-                        <div class="col-xs-12">
-                            <input type="email" class="form-control" name="customer[email]" placeholder="<?php echo __('Địa chỉ email của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
+                        <div class="col-sm-6">
+                            <input type="email" class="form-control" id="customer-email" name="customer_email" placeholder="<?php echo __('Nhập địa chỉ email của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
                                    data-bv-notempty-message="Bạn cần điền email"
 
                                    data-bv-emailaddress="true"
@@ -87,8 +87,18 @@ class CEMSSubscribeForm15 {
                         </div>
                     </div>
                     <div class="form-group">
-                        <div class="col-xs-12">
-                            <input type="text" class="form-control" name="customer[fullname]" placeholder="<?php echo __('Họ tên',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
+                        <div class="col-sm-12 text-center">
+                            Nếu bạn đã từng đăng ký với chúng tôi, bạn chỉ cần điền email, những thông tin khác sẽ được tự động điền giúp bạn.
+                        </div>
+                    </div>
+                    <div class="alert alert-danger" role="alert" id="cems-notify-customer" style="display: none">
+                        <div class="error-response"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-fullname" class="col-sm-3 control-label"><?php echo __('
+Họ Tên',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="customer-fullname" name="customer_fullname" placeholder="<?php echo __('Nhập họ tên',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
                                    data-bv-notempty-message="Họ tên không được để trống"
 
                                    data-bv-stringlength="true"
@@ -101,8 +111,8 @@ class CEMSSubscribeForm15 {
                     <div class="form-group">
                         <label for="customer-phone" class="col-sm-3 control-label"><?php echo __('
 Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
-                        <div class="col-xs-12">
-                            <input type="tel" class="form-control" name="customer[phone]" placeholder="<?php echo __('Số điện thoại của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
+                        <div class="col-sm-8">
+                            <input type="tel" class="form-control" id="customer-phone" name="customer_phone" placeholder="<?php echo __('Nhập số điện thoại của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
                                    data-bv-notempty-message="Không được để trống số điện thoại"
 
                                    data-bv-stringlength="true"
@@ -115,19 +125,64 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                                    data-bv-regexp-message="Số điện thoại chỉ gồm một chuỗi các số">
                         </div>
                     </div>
+
+                    <div class="form-group">
+                        <label for="customer-birthday" class="col-sm-3 control-label">Ngày sinh<sup>*</sup></label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="customer-birthday" name="customer_birthday" placeholder="DD-MM-YYYY"
+                                   data-bv-date="true"
+                                   data-bv-date-format="DD-MM-YYYY"
+                                   data-bv-date-message="Ngày sinh không hợp lệ"
+                                   data-provide="datepicker"
+                                   data-date-format="dd-mm-yyyy"
+                                   data-date-language="vi"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="subscription-why_know_htt20">Vì sao bạn biết đến HTT20 (ghi rõ tên người giới thiệu)?                            <sup>*</sup></label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="subscription-why_know_htt20" name="subscription[why_know_htt20]">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="subscription-why_join_htt20">Vì sao bạn muốn tham gia HTT20?<sup>*</sup></label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="3" id="subscription-why_join_htt20" name="subscription[why_join_htt20]"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="subscription-result_detail_htt20">Những kết quả cụ thể mà bạn muốn đạt được sau khi tham gia HTT20?<sup>*</sup></label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="3" id="subscription-result_detail_htt20" name="subscription[result_detail_htt20]"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label" for="subscription-action_plan_htt20">Hãy nêu những hành động cụ thể mà bạn sẵn sàng làm ngay để đạt được những mục tiêu đề ra khi tham gia HTT20?<sup>*</sup></label>
+                        <div class="col-sm-8">
+                            <textarea class="form-control" rows="3" id="subscription-action_plan_htt20" name="subscription[action_plan_htt20]"></textarea>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-warning" role="alert">
+                        <strong>Bạn nhớ nha:</strong>  Life Coaching Vietnam sẽ gửi thông tin đến địa chỉ email bạn đăng ký. Vui lòng nhập email chính xác.
+                    </div>
                     <div class="form-group">
                         <div class="text-center">
-                            <button data-loading-text="Đang gửi ..." type="submit" class="btn btn-primary" id="btn-new-mail-subscribe" ><?php echo __('Gửi',WPCEMS_TEXTDOMAIN);?></button>
+                            <button data-loading-text="Đang gửi ..." type="submit" class="btn btn-primary" id="btn-new-customer" ><?php echo __('Gửi',WPCEMS_TEXTDOMAIN);?></button>
                             <button class="btn btn-default btn-reset"><?php echo __('Điền lại',WPCEMS_TEXTDOMAIN);?></button>
                         </div>
-                    </div>					
-					<div class="alert alert-danger alert-dismissible" role="alert" id="cems-alert" style="display: none">
-						<button type="button" class="close" data-dismiss="alert">
-							<span aria-hidden="true">&times;</span>
-							<span class="sr-only">Đóng</span>
-						</button>
-						<div class="error-response"></div>
-					</div>
+                    </div>
+                    <div class="alert alert-danger alert-dismissible" role="alert" id="cems-alert" style="display: none">
+                        <button type="button" class="close" data-dismiss="alert">
+                            <span aria-hidden="true">&times;</span>
+                            <span class="sr-only">Đóng</span>
+                        </button>
+                        <div class="error-response"></div>
+                    </div>
                 </form>
             </div>
         </div>
