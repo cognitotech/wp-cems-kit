@@ -69,14 +69,14 @@ class CEMSEvent17 {
                 <form role="form" name="event17-form" id='event17-form' method="post" class="form-horizontal" data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
                       data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
                       data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
-                    <input type="hidden" value="<?php echo $this->event_id;?>" name="eventId">
-                    <input type="hidden" value="" name="customer_source">
+                    <input type="hidden" value="<?php echo $this->event_id;?>" name="event_register[event_id]">
+                    <input type="hidden" name="event_register[customer_source]">
 
                     <div class="form-group">
                         <label for="customer-email" class="col-sm-3 control-label"><?php echo __('
 Địa chỉ email',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                         <div class="col-sm-6">
-                            <input type="email" class="form-control" id="customer-email" name="customer_email" placeholder="<?php echo __('Nhập địa chỉ email của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
+                            <input type="email" class="form-control" id="customer-email" name="customer[email]" placeholder="<?php echo __('Nhập địa chỉ email của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
                                    data-bv-notempty-message="Bạn cần điền email"
 
                                    data-bv-emailaddress="true"
@@ -91,14 +91,14 @@ class CEMSEvent17 {
                             Nếu bạn đã từng đăng ký với chúng tôi, bạn chỉ cần điền email, những thông tin khác sẽ được tự động điền giúp bạn.
                         </div>
                     </div>
-                    <div class="alert alert-danger" role="alert" id="cems-notify-customer" style="display: none">
+                    <div class="alert alert-danger cems-notify-customer" role="alert" style="display: none">
                         <div class="error-response"></div>
                     </div>
                     <div class="form-group">
                         <label for="customer-fullname" class="col-sm-3 control-label"><?php echo __('
 Họ Tên',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="customer-fullname" name="customer_fullname" placeholder="<?php echo __('Nhập họ tên',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
+                            <input type="text" class="form-control" id="customer-fullname" name="customer[full_name]" placeholder="<?php echo __('Nhập họ tên',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
                                    data-bv-notempty-message="Họ tên không được để trống"
 
                                    data-bv-stringlength="true"
@@ -112,7 +112,7 @@ Họ Tên',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                         <label for="customer-phone" class="col-sm-3 control-label"><?php echo __('
 Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                         <div class="col-sm-8">
-                            <input type="tel" class="form-control" id="customer-phone" name="customer_phone" placeholder="<?php echo __('Nhập số điện thoại của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
+                            <input type="tel" class="form-control" id="customer-phone" name="customer[phone]" placeholder="<?php echo __('Nhập số điện thoại của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
                                    data-bv-notempty-message="Không được để trống số điện thoại"
 
                                    data-bv-stringlength="true"
@@ -129,7 +129,7 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                     <div class="form-group">
                         <label for="customer-birthday" class="col-sm-3 control-label">Ngày sinh<sup>*</sup></label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="customer-birthday" name="customer_birthday" placeholder="DD-MM-YYYY"
+                            <input type="text" class="form-control" id="customer-birthday" name="customer[birthday]" placeholder="DD-MM-YYYY"
                                    data-bv-notempty="true"
                                    data-bv-notempty-message="Bạn phải điền ngày sinh"
 
@@ -147,24 +147,24 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                         <div class="col-sm-8">
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="event_register_source" value="Facebook Life Coaching Vietnam"
+                                    <input type="radio" name="event_register[why_you_know]" value="Facebook Life Coaching Vietnam"
                                            data-bv-notempty="true"
                                            data-bv-notempty-message="Bạn chưa chọn nguồn thông tin" /> Facebook Life Coaching Vietnam
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="event_register_source" value="Facebook bạn bè người thân chia sẻ" /> Facebook bạn bè người thân chia sẻ
+                                    <input type="radio" name="event_register[why_you_know]" value="Facebook bạn bè người thân chia sẻ" /> Facebook bạn bè người thân chia sẻ
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="event_register_source" value="Truyền miệng từ bạn bè người thân" /> Truyền miệng từ bạn bè người thân
+                                    <input type="radio" name="event_register[why_you_know]" value="Truyền miệng từ bạn bè người thân" /> Truyền miệng từ bạn bè người thân
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="event_register_source" value="Trang web lifecoach.com.vn" /> Trang web lifecoach.com.vn
+                                    <input type="radio" name="event_register[why_you_know]" value="Trang web lifecoach.com.vn" /> Trang web lifecoach.com.vn
                                 </label>
                             </div>
                         </div>
