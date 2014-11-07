@@ -4,7 +4,7 @@
   (function($) {
     var bootstrapButton;
     bootstrapButton = $.fn.button.noConflict();
-    $.fn.bootstrapBtn = bootstrapButton;
+    return $.fn.bootstrapBtn = bootstrapButton;
   })(jQuery);
 
   jQuery(document).ready(function($) {
@@ -12,9 +12,9 @@
     CEMSAjaxCall = function(submitBtn, cems_action, form, alert_box) {
       var $alert;
       submitBtn.bootstrapBtn("loading");
-      $alert = $(alert_box);
+      $alert = $(form).find(alert_box);
       $alert.fadeOut("slow");
-      $.post(wpdk_i18n.ajaxURL, "action=" + cems_action + "&" + $(form).serialize(), function(result) {
+      return $.post(wpdk_i18n.ajaxURL, "action=" + cems_action + "&" + $(form).serialize(), function(result) {
         var data, response, textResponse;
         response = new WPDKAjaxResponse(result);
         textResponse = "";
@@ -22,10 +22,10 @@
           if (cems_action === "get_customer_existed_action") {
             textResponse = response.message;
             data = $.parseJSON(response.data);
-            $(form).find('#customer-email').prop('readOnly', true);
-            $(form).find('#customer-fullname').val(data.full_name).prop('readOnly', true);
-            $(form).find('#customer-phone').val(data.phone).prop('readOnly', true);
-            $(form).find('#customer-birthday').val(moment(data.birthday, 'YYYY-MM-DD').format('DD-MM-YYYY')).prop('readOnly', true);
+            $(form).find("input[name$='[email]']").prop('readOnly', true);
+            $(form).find("input[name$='[full_name]']").val(data.full_name).prop('readOnly', true);
+            $(form).find("input[name$='[phone]']").val(data.phone).prop('readOnly', true);
+            $(form).find("input[name$='[birthday]']").val(moment(data.birthday, 'YYYY-MM-DD').format('DD-MM-YYYY')).prop('readOnly', true);
           } else {
             textResponse = response.message + "<br>" + response.data;
           }
@@ -36,16 +36,16 @@
         }
         $alert.children(".error-response").html(textResponse);
         $alert.fadeIn("slow");
-        $.scrollTo($alert, 800, {
+        return $.scrollTo($alert, 800, {
           offset: -50
         });
       }).always(function() {
-        submitBtn.bootstrapBtn("reset");
+        return submitBtn.bootstrapBtn("reset");
       });
     };
-    $("#event17-form").bootstrapValidator({
+    $("#event17-form,.subscriptionForm").bootstrapValidator({
       fields: {
-        customer_birthday: {
+        'customer[birthday]': {
           validators: {
             trigger: 'change keyup',
             callback: {
@@ -67,31 +67,42 @@
       var $form;
       e.preventDefault();
       $form = $(e.target);
-      CEMSAjaxCall($form.find('[type=submit]:not(.bv-hidden-submit)'), "register_new_event_action", $form, '#cems-alert');
+      return CEMSAjaxCall($form.find('[type=submit]:not(.bv-hidden-submit)'), "register_new_event_action", $form, '#cems-alert');
     });
     $("#customer-birthday").datepicker({
       autoclose: "true"
     }).on("changeDate show", function(e) {
-      $("#event17-form").bootstrapValidator("revalidateField", "customer_birthday");
+      return $(this).closest("form").bootstrapValidator("revalidateField", "customer[birthday]");
     });
-    $("#event17-form .btn-check-exist").click(function() {
+    $(".btn-check-exist").click(function() {
       var $form, bootstrapValidator;
-      $form = $("#event17-form");
+      $form = $(this).closest('form');
       bootstrapValidator = $form.data('bootstrapValidator');
-      if (!bootstrapValidator.isValidField("customer_email")) {
-        bootstrapValidator.revalidateField("customer_email");
+      if (!bootstrapValidator.isValidField("customer[email]")) {
+        bootstrapValidator.revalidateField("customer[email]");
         return;
       }
-      return CEMSAjaxCall($form.find('.btn-check-exist'), "get_customer_existed_action", $form, "#cems-notify-customer");
+      return CEMSAjaxCall($form.find('.btn-check-exist'), "get_customer_existed_action", $form, ".cems-notify-customer");
     });
-    $("#event17-form .btn-reset").click(function(e) {
+    $(".btn-reset").click(function(e) {
       var $form;
       e.preventDefault();
-      $form = $("#event17-form");
+      $form = $(this).closest("form");
       $form.find('.alert').hide();
       $form[0].reset();
       $form.find('input').prop('readOnly', false);
-      $form.data('bootstrapValidator').resetForm(true);
+      return $form.data('bootstrapValidator').resetForm(true);
+    });
+    $(".subscriptionForm").bootstrapValidator().on('success.form.bv', function(e) {
+      var $form;
+      e.preventDefault();
+      $form = $(e.target);
+      return CEMSAjaxCall($form.find('[type=submit]:not(.bv-hidden-submit)'), "new_subscription_action", $form, '.cems-alert');
+    });
+    return $("input[name$='birthday']").datepicker({
+      autoclose: "true"
+    }).on("changeDate show", function(e) {
+      return $(this).closest("form").bootstrapValidator("revalidateField", "customer[birthday]");
     });
   });
 

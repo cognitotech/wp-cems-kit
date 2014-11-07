@@ -4,15 +4,13 @@ jQuery.noConflict()
   #bootstrap fix noConflict with jquery-ui
   bootstrapButton = $.fn.button.noConflict() # return $.fn.button to previously assigned value
   $.fn.bootstrapBtn = bootstrapButton # give $().bootstrapBtn the Bootstrap functionality
-
-  return
 ) jQuery
 jQuery(document).ready ($) ->
 
   # Sending something...
   CEMSAjaxCall = (submitBtn, cems_action, form, alert_box) ->
     submitBtn.bootstrapBtn "loading"
-    $alert = $(alert_box)
+    $alert = $(form).find(alert_box)
     $alert.fadeOut "slow"
 
     $.post(wpdk_i18n.ajaxURL, "action=" + cems_action + "&" + $(form).serialize(), (result) ->
@@ -24,10 +22,10 @@ jQuery(document).ready ($) ->
           textResponse = response.message
           #setup data here
           data = $.parseJSON(response.data)
-          $(form).find('#customer-email').prop('readOnly',true)
-          $(form).find('#customer-fullname').val(data.full_name).prop('readOnly',true)
-          $(form).find('#customer-phone').val(data.phone).prop('readOnly',true)
-          $(form).find('#customer-birthday').val(moment(data.birthday, 'YYYY-MM-DD').format('DD-MM-YYYY')).prop('readOnly',true)
+          $(form).find("input[name$='[email]']").prop('readOnly',true)
+          $(form).find("input[name$='[full_name]']").val(data.full_name).prop('readOnly',true)
+          $(form).find("input[name$='[phone]']").val(data.phone).prop('readOnly',true)
+          $(form).find("input[name$='[birthday]']").val(moment(data.birthday, 'YYYY-MM-DD').format('DD-MM-YYYY')).prop('readOnly',true)
         else
           textResponse = response.message + "<br>" + response.data
         $alert.removeClass("alert-danger").addClass "alert-success"
@@ -38,17 +36,14 @@ jQuery(document).ready ($) ->
       $alert.fadeIn "slow"
       $.scrollTo $alert, 800,
         offset:-50
-      return
     ).always ->
       submitBtn.bootstrapBtn "reset"
-      return
 
-    return
 
   #form validation
-  $("#event17-form").bootstrapValidator(
+  $("#event17-form,.subscriptionForm").bootstrapValidator(
     fields:
-      customer_birthday:
+      'customer[birthday]':
         validators:
           trigger: 'change keyup'
           callback:
@@ -64,31 +59,39 @@ jQuery(document).ready ($) ->
     e.preventDefault()
     $form = $(e.target)
     CEMSAjaxCall $form.find('[type=submit]:not(.bv-hidden-submit)'), "register_new_event_action", $form, '#cems-alert'
-    return
 
   #birthday validation
   $("#customer-birthday").datepicker(
     autoclose:"true"
   ).on "changeDate show", (e) ->
     # Revalidate the date when user change it
-    $("#event17-form").bootstrapValidator "revalidateField", "customer_birthday"
-    return
+    $(this).closest("form").bootstrapValidator "revalidateField", "customer[birthday]"
 
-  $("#event17-form .btn-check-exist").click ->
-    $form = $("#event17-form")
+  $(".btn-check-exist").click ->
+    $form = $(this).closest('form')
     bootstrapValidator = $form.data('bootstrapValidator')
-    unless bootstrapValidator.isValidField("customer_email")
-      bootstrapValidator.revalidateField("customer_email")
+    unless bootstrapValidator.isValidField("customer[email]")
+      bootstrapValidator.revalidateField("customer[email]")
       return
 
-    CEMSAjaxCall $form.find('.btn-check-exist'), "get_customer_existed_action", $form, "#cems-notify-customer"
+    CEMSAjaxCall $form.find('.btn-check-exist'), "get_customer_existed_action", $form, ".cems-notify-customer"
 
-  $("#event17-form .btn-reset").click (e)->
+  $(".btn-reset").click (e)->
     e.preventDefault()
-    $form = $("#event17-form")
+    $form = $(this).closest("form")
     $form.find('.alert').hide()
     $form[0].reset();
     $form.find('input').prop('readOnly',false)
     $form.data('bootstrapValidator').resetForm(true)
-    return
-  return
+
+  $(".subscriptionForm").bootstrapValidator().on 'success.form.bv', (e) ->
+    e.preventDefault()
+    $form = $(e.target)
+    CEMSAjaxCall $form.find('[type=submit]:not(.bv-hidden-submit)'), "new_subscription_action", $form, '.cems-alert'
+
+  #birthday validation
+  $("input[name$='birthday']").datepicker(
+    autoclose:"true"
+  ).on "changeDate show", (e) ->
+    # Revalidate the date when user change it
+    $(this).closest("form").bootstrapValidator "revalidateField", "customer[birthday]"
