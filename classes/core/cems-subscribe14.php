@@ -6,16 +6,16 @@
  * Time: 1:09 PM
  */
 /**
- * Model of a single CEMSSubscribeForm15 template
+ * Model of a single CEMSSubscribeForm14 template
  *
- * @class           CEMSSubscribeForm15
+ * @class           CEMSSubscribeForm14
  * @author          pnghai <nguyenhai@siliconstraits.vn>
  * @copyright       Copyright (C) 2014-2015 Silicon Straits. All Rights Reserved.
  * @date            2014-10-15
  * @version         1.0.0
  *
  */
-class CEMSSubscribeForm15 {
+class CEMSSubscribeForm14 {
 
     /**
      * Event ID
@@ -27,13 +27,13 @@ class CEMSSubscribeForm15 {
     public $list_id = -1;
 
     /**
-     * Create an instance of CEMSSubscribeForm15 class
+     * Create an instance of CEMSSubscribeForm14 class
      *
      * @brief Construct
      *
      * @param array $attributes Required Shortcode Attributes
      *
-     * @return CEMSSubscribeForm15
+     * @return CEMSSubscribeForm14
      */
     public function __construct( $attributes)
     {
@@ -64,9 +64,9 @@ class CEMSSubscribeForm15 {
     {
         WPDKHTML::startCompress();
         ?>
-        <div class="panel panel-default cems-subscription15-panel">
+        <div class="panel panel-default cems-subscription14-panel">
             <div class="panel-body">
-                <form role="form" name="subscription15-form" id='subscription15-form' method="post" class="form-horizontal subscriptionForm" data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
+                <form role="form" name="subscription14-form" id='subscription14-form' method="post" class="form-horizontal subscriptionForm" data-bv-feedbackicons-valid="glyphicon glyphicon-ok"
                       data-bv-feedbackicons-invalid="glyphicon glyphicon-remove"
                       data-bv-feedbackicons-validating="glyphicon glyphicon-refresh">
                     <input type="hidden" value="<?php echo $this->list_id;?>" name="subscription[subscriber_list_id]">
@@ -140,30 +140,82 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="subscription-why_know_htt20">Vì sao bạn biết đến HTT20 (ghi rõ tên người giới thiệu)?</label>
+                        <label class="col-sm-3 control-label">Bạn muốn thực hiện Career Coaching hay Life Coaching?<sup>*</sup></label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="subscription-why_know_htt20" name="subscription[why_know_htt20]">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="subscription[what_you_want][]" value="Career coaching"
+                                           data-bv-notempty="true"
+                                           data-bv-notempty-message="Bạn chưa chọn nguồn thông tin" />Career coaching
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="subscription[what_you_want][]" value="Life coaching" />Life coaching
+                                </label>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="subscription-why_join_htt20">Vì sao bạn muốn tham gia HTT20?</label>
+                        <label class="col-sm-3 control-label" for="subscription-why_register">Vì sao bạn đăng ký? Bạn muốn đạt được điều gì sau các buổi coaching?</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" rows="3" id="subscription-why_join_htt20" name="subscription[why_join_htt20]"></textarea>
+                            <textarea class="form-control" rows="3" id="subscription-why_register" name="subscription[why_register]"></textarea>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="subscription-result_detail_htt20">Những kết quả cụ thể mà bạn muốn đạt được sau khi tham gia HTT20?</label>
+                        <label for="subscription-booking_date" class="col-sm-3 control-label">Chọn ngày bạn muốn gặp. Life Coaching Vietnam sẽ gọi điện xác nhận trong vòng 24 tiếng.<sup>*</sup></label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" rows="3" id="subscription-result_detail_htt20" name="subscription[result_detail_htt20]"></textarea>
+                            <input type="text" class="form-control" id="subscription-booking_date" name="subscription[booking_date]" placeholder="DD-MM-YYYY"
+                                   data-bv-date="true"
+                                   data-bv-date-format="DD-MM-YYYY"
+                                   data-bv-date-message="Ngày không hợp lệ"
+                                   data-provide="datepicker"
+                                   data-date-format="dd-mm-yyyy"
+                                   data-date-language="vi"/>
                         </div>
                     </div>
 
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="subscription-action_plan_htt20">Hãy nêu những hành động cụ thể mà bạn sẵn sàng làm ngay để đạt được những mục tiêu đề ra khi tham gia HTT20?</label>
+                        <label class="col-sm-3 control-label">Chọn hình thức coaching:</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" rows="3" id="subscription-action_plan_htt20" name="subscription[action_plan_htt20]"></textarea>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="subscription[coaching_type][]" value="Email" />Email
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="subscription[coaching_type][]" value="Skype" />Skype
+                                </label>
+                            </div>
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox" name="subscription[coaching_type][]" value="Gặp mặt trực tiếp" />Gặp mặt trực tiếp
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Chọn số người sẽ gặp coach</label>
+                        <div class="col-sm-8">
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="subscription[coaching_type]" value="1 mình bạn" />1 mình bạn
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="subscription[number_clients]" value="Bạn và 1 người nữa" />Bạn và 1 người nữa
+                                </label>
+                            </div>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="subscription[number_clients]" value="Bạn và 2 người trở lên" />Bạn và 2 người trở lên
+                                </label>
+                            </div>
                         </div>
                     </div>
 

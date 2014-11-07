@@ -8,7 +8,7 @@
 
 /**
  * CEMS SubscribeForm Shortcode
- * [cems_subscribe id='13']
+ * [cems_subscribe id='13' theme='CEMSSubscribeForm13']
  *
  * @class              CEMSSubscribeFormShortcode
  * @author             pnghai <nguyenhai@siliconstraits.vn>
