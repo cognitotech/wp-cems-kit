@@ -34,7 +34,10 @@ jQuery(document).ready ($) ->
   if $('form').length is 0
     return
 
-  if $("input[name$='customer_source']").val().length > 0
+  if $("input[name$='[customer_source]']").length is 0
+    return
+
+  if $("input[name$='[customer_source]']").val().length > 0
     return
 
   utm_source = window.getParameterByName("utm_source")
@@ -56,5 +59,5 @@ jQuery(document).ready ($) ->
           else
             result = referrer.split('/')[2]
 
-  $("input[name$='customer_source']").val result
+  $("input[name$='[customer_source]']").val result
   return
