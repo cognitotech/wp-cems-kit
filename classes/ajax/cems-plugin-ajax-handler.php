@@ -52,7 +52,7 @@ if ( wpdk_is_ajax() ) {
         {
             $actionsMethods = array(
                 'register_new_customer_action' => true,
-                'subscribe_form' => true,
+                'new_subscription_action' => true,
                 'register_new_event_action' => true,
                 'get_customer_existed_action' => true
             );
@@ -294,26 +294,19 @@ if ( wpdk_is_ajax() ) {
         {
             // Prepare response
             $response = new WPDKAjaxResponse();
+            $response = new WPDKAjaxResponse();
 
-            if ( !isset( $_POST['eventId'] ) || empty( $_POST['customer_email']) || intval($_POST['eventId'])<=0 ) {
+            if ( !isset( $_POST['event_register']['event_id'] ) || empty( $_POST['customer']['email']) || intval($_POST['event_register']['event_id'])<=0 ) {
                 $response->error = __( 'Invalid Data. Please contact your administrator.', WPCEMS_TEXTDOMAIN );
                 $response->json();
             }
-            $eventId = intval($_POST['eventId']);
-            $customer_email = sanitize_email($_POST['customer_email']);
-            $phone = sanitize_text_field($_POST['customer_phone']);
-            $full_name = sanitize_text_field($_POST['customer_fullname']);
-            $birthday = sanitize_text_field($_POST['customer_birthday']);
+            $in_customer = $_POST['customer'];
+            $in_customer['email'] = sanitize_email($in_customer['email']);
             //create customer
             try {
                 $customer=$this->callCEMSApi('POST',
                     '/admin/customers.json',
-                    array(
-                        'email' => $customer_email,
-                        'full_name' => $full_name,
-                        'birthday' => $birthday,
-                        'phone'=> $phone
-                    )
+                    $in_customer
                 )->getObject('CEMS\Customer');
             }
             catch(CEMS\BaseException $e)
@@ -327,7 +320,7 @@ if ( wpdk_is_ajax() ) {
                     $customer=$this->callCEMSApi('GET',
                         '/admin/customers/find_by.json',
                         array(
-                            'email'=>$customer_email
+                            'email'=>$in_customer['email']
                         )
                     )->getObject('CEMS\Customer');
                 }
@@ -338,28 +331,28 @@ if ( wpdk_is_ajax() ) {
                 }
             }
             if (isset($customer))
-                $this->event_register($response,$customer,$eventId);
+                $this->event_register($response,$customer);
         }
 
         /**
          * Helper Register customer to an event
          * @param $response WPDKAJAXResponse Object
          * @param $customer Object as CEMS\Customer
-         * @param $eventId int
          */
-        public function event_register($response=null,$customer=null,$eventId=-1)
+        public function event_register($response=null,$customer=null)
         {
 
-            $why_know = sanitize_text_field($_POST['event_register_source']);
-            $utm_source = sanitize_text_field($_POST['customer_source']);
             //check subscription registered yet?
+            $in_event_register = $_POST['event_register'];
+            $in_event_register['status'] = 'confirmed';
+            $in_event_register['customer_id'] = $customer->id;
             $event_register=null;
             try {
                 $event_register = $this->callCEMSApi('GET',
                     '/admin/event_registers/find_by.json',
                     array(
                         'customer_id'=>$customer->id,
-                        'event_id'=>$eventId
+                        'event_id'=>$in_event_register['event_id']
                     )
                 );
             }
@@ -377,13 +370,7 @@ if ( wpdk_is_ajax() ) {
                 try{
                     $event_register=$this->callCEMSApi('POST',
                         '/admin/event_registers.json',
-                        array(
-                            'customer_id'=>$customer->id,
-                            'event_id'=>$eventId,
-                            'why_you_know' => $why_know,
-                            'customer_source'=>$utm_source,
-                            'status'=>'confirmed' // tell CEMS server not require user to confirm their emails
-                        )
+                        $in_event_register
                     );
                 }
 
@@ -415,11 +402,11 @@ if ( wpdk_is_ajax() ) {
         {
             // Prepare response
             $response = new WPDKAjaxResponse();
-            if (empty( $_POST['customer_email']) ) {
+            if (empty( $_POST['customer']['email']) ) {
                 $response->error = __( 'Invalid Data. Please contact your administrator.', WPCEMS_TEXTDOMAIN );
                 $response->json();
             }
-            $customer_email = sanitize_email($_POST['customer_email']);
+            $customer_email = sanitize_email($_POST['customer']['email']);
             try {
                 $customer=$this->callCEMSApi('GET',
                     '/admin/customers/find_by.json',
@@ -438,6 +425,113 @@ if ( wpdk_is_ajax() ) {
                 $response->data = json_encode($customer->toArray());
                 $response->json();
             endif;
+        }
+
+        /**
+         * Handler for registering new customer to Subscription List
+         *
+         * @brief Brief
+         *
+         * @return string
+         */
+        public function new_subscription_action()
+        {
+            // Prepare response
+            $response = new WPDKAjaxResponse();
+
+            if ( !isset( $_POST['subscription']['subscriber_list_id'] ) || empty( $_POST['customer']['email']) || intval($_POST['subscription']['subscriber_list_id'])<=0 ) {
+                $response->error = __( 'Invalid Data. Please contact your administrator.', WPCEMS_TEXTDOMAIN );
+                $response->json();
+            }
+            $in_customer = $_POST['customer'];
+            $in_customer['email'] = sanitize_email($in_customer['email']);
+            //create customer
+            try {
+                $customer=$this->callCEMSApi('POST',
+                    '/admin/customers.json',
+                    $in_customer
+                )->getObject('CEMS\Customer');
+            }
+            catch(CEMS\BaseException $e)
+            {
+                if (strpos((string)$e,'email')==FALSE)
+                {
+                    $response->error='Lỗi khi đăng ký: '.$e->getFormattedMessage();
+                    $response->json();
+                }
+                try {
+                    $customer=$this->callCEMSApi('GET',
+                        '/admin/customers/find_by.json',
+                        array(
+                            'email' => $in_customer['email']
+                        )
+                    )->getObject('CEMS\Customer');
+                }
+                catch(CEMS\BaseException $e)
+                {
+                    $response->error = 'Lỗi khi đăng ký: '.$e->getFormattedMessage();
+                    $response->json();
+                }
+            }
+            if (isset($customer))
+                $this->subscribe_form($response,$customer);
+        }
+
+        /**
+         * Helper Register customer to an Subscription List
+         * @param $response WPDKAJAXResponse Object
+         * @param $customer Object as CEMS\Customer
+         */
+        public function subscribe_form($response = null,$customer = null)
+        {
+
+            //check subscription registered yet?
+            $in_subscription = $_POST['subscription'];
+            $in_subscription['status'] = 'confirmed';
+            $in_subscription['customer_id'] = $customer->id;
+            $subscription = null;
+            try {
+                $subscription = $this->callCEMSApi('GET',
+                    '/admin/subscriptions/find_by.json',
+                    array(
+                        'customer_id' => $customer->id,
+                        'subscriber_list_id' => $in_subscription['subscriber_list_id']
+                    )
+                );
+            }
+            catch (CEMS\BaseException $e) {
+                if ($e->getCode()!='404') //we find the not found status, if we got anything else, it means DOOM
+                {
+                    $response->error='Lỗi '.$e->getCode().' khi đăng ký subscription. Xin liên hệ admin';
+                    $response->json();
+                }
+            }
+
+            if ($subscription==null)
+            {
+                //register a event for customer
+                try{
+                    $subscription=$this->callCEMSApi('POST',
+                        '/admin/subscriptions.json',
+                        $in_subscription
+                    );
+                }
+
+                catch (CEMS\BaseException $e){
+                    //cannot make new Event Registration, kidding?
+                    $response->error='Không thể đăng ký. Xin liên hệ admin';
+                    $response->json();
+                }
+
+                $response->message='Cảm ơn bạn đã tin tưởng Life Coaching Vietnam. Bạn có muốn đặt lịch hẹn để nhận 1 buổi coaching miễn phí ngay hôm nay? <a href="http://lifecoach.com.vn/dat-lich-hen-coaching/">Đặt lịch hẹn</a>';
+                $response->json();
+            }
+            else
+            {
+                $response->error='Bạn đã đăng ký rồi! Xin kiểm tra lại email <a href="mailto:'.$customer->email.'">'.$customer->email. '</a> để biết thêm thông tin.';
+                $response->json();
+            }
+
         }
     }
 }

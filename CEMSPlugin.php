@@ -90,6 +90,7 @@ if( !class_exists( 'CEMSPlugin' ) )
                 $this->classesPath . 'ajax/cems-plugin-ajax-handler.php' => 'CEMSPluginAjaxHandler',
                 $this->classesPath . 'core/cems-event17.php' => 'CEMSEvent17',
                 $this->classesPath . 'core/cems-subscribe13.php' => 'CEMSSubscribeForm13',
+                $this->classesPath . 'core/cems-subscribe14.php' => 'CEMSSubscribeForm14',
                 $this->classesPath . 'core/cems-subscribe15.php' => 'CEMSSubscribeForm15',
                 $this->classesPath . 'preferences/cems-plugin-preferences.php' => array(
                     'CEMSPluginPreferences',
