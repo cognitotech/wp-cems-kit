@@ -9,6 +9,7 @@
 
   jQuery(document).ready(function($) {
     var CEMSAjaxCall;
+    $('input, textarea').placeholder();
     CEMSAjaxCall = function(submitBtn, cems_action, form, alert_box) {
       var $alert;
       submitBtn.bootstrapBtn("loading");

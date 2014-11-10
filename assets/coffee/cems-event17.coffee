@@ -6,6 +6,7 @@ jQuery.noConflict()
   $.fn.bootstrapBtn = bootstrapButton # give $().bootstrapBtn the Bootstrap functionality
 ) jQuery
 jQuery(document).ready ($) ->
+  $('input, textarea').placeholder()
 
   # Sending something...
   CEMSAjaxCall = (submitBtn, cems_action, form, alert_box) ->
