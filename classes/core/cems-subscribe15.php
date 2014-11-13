@@ -75,15 +75,15 @@ class CEMSSubscribeForm15 {
                     <div class="form-group">
                         <label for="customer-email" class="col-sm-3 control-label"><?php echo __('
 Địa chỉ email',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
-                        <div class="col-sm-6">
+                        <div class="col-sm-7">
                             <input type="email" class="form-control" id="customer-email" name="customer[email]" placeholder="<?php echo __('Nhập địa chỉ email của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
                                    data-bv-notempty-message="Bạn cần điền email"
 
                                    data-bv-emailaddress="true"
                                    data-bv-emailaddress-message="Email không hợp lệ">
                         </div>
-                        <div class="col-sm-3">
-                            <button type="button" class="btn btn-default btn-check-exist" data-loading-text="Xin chờ ..." >Kiểm tra</button>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-default btn-block btn-check-exist" data-loading-text="Xin chờ ..." >Kiểm tra</button>
                         </div>
                     </div>
                     <div class="form-group">
