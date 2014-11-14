@@ -64,7 +64,8 @@
           }
         }
       }
-    }).on('success.form.bv', function(e) {
+    });
+    $("#event17-form").bootstrapValidator().on('success.form.bv', function(e) {
       var $form;
       e.preventDefault();
       $form = $(e.target);

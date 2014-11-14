@@ -83,12 +83,8 @@ class CEMSEvent17 {
                                    data-bv-emailaddress-message="Email không hợp lệ">
                         </div>
                         <div class="col-sm-3">
-                            <button type="button" class="btn btn-default btn-check-exist" data-loading-text="Xin chờ ..." >Kiểm tra</button>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <div class="col-sm-12 text-center">
-                            Nếu bạn đã từng đăng ký với chúng tôi, bạn chỉ cần điền email, những thông tin khác sẽ được tự động điền giúp bạn.
+                            <button type="button" class="btn btn-default btn-check-exist" data-loading-text="Xin chờ ..." data-toggle='tooltip' data-placement='bottom' title='
+                            Nếu bạn đã từng đăng ký với chúng tôi, bạn chỉ cần điền email, những thông tin khác sẽ được tự động điền giúp bạn.'>Kiểm tra</button>
                         </div>
                     </div>
                     <div class="alert alert-danger cems-notify-customer" role="alert" style="display: none">
@@ -178,7 +174,7 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                             <button data-loading-text="Đang gửi ..." type="submit" class="btn btn-primary" id="btn-new-customer" ><?php echo __('Gửi',WPCEMS_TEXTDOMAIN);?></button>
                             <button class="btn btn-default btn-reset"><?php echo __('Điền lại',WPCEMS_TEXTDOMAIN);?></button>
                         </div>
-                    </div>					
+                    </div>
 					<div class="alert alert-danger alert-dismissible" role="alert" id="cems-alert" style="display: none">
 						<button type="button" class="close" data-dismiss="alert">
 							<span aria-hidden="true">&times;</span>

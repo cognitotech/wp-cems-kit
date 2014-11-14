@@ -55,7 +55,8 @@ jQuery(document).ready ($) ->
               age = moment().diff(m, 'years')
               age >= 10
 
-  ).on 'success.form.bv', (e) ->
+  )
+  $("#event17-form").bootstrapValidator().on 'success.form.bv', (e) ->
 
     e.preventDefault()
     $form = $(e.target)
