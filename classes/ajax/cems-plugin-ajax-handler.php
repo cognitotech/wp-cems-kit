@@ -620,14 +620,14 @@ if ( wpdk_is_ajax() ) {
                 }
             }
 
-            $response->message='';
             //build quiz
-            $quiz_shortcodes = '';
             $quiz_ids = explode(',',$_POST['quiz']['id']);
+            $GLOBALS['cems_ajax']=true;
             foreach ($quiz_ids as $quiz_id):
-                $quiz_shortcodes .= '[WATU '.$quiz_id.']<br>';
+                $response->data .= do_shortcode('[WATU '.$quiz_id.']').'<br>';
             endforeach;
-            $response->data = do_shortcode($quiz_shortcodes);
+
+            $response->message='';
             $response->json();
         }
     }
