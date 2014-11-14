@@ -519,11 +519,14 @@ if ( wpdk_is_ajax() ) {
 
                 catch (CEMS\BaseException $e){
                     //cannot make new Event Registration, kidding?
-                    $response->error='Không thể đăng ký. Xin liên hệ admin';
+                    $response->error='Xin bạn thử lại hoặc liên hệ admin. Hệ thống không trả lời yêu cầu của bạn';
                     $response->json();
                 }
-
-                $response->message='Cảm ơn bạn đã tin tưởng Life Coaching Vietnam. Bạn có muốn đặt lịch hẹn để nhận 1 buổi coaching miễn phí ngay hôm nay? <a href="http://lifecoach.com.vn/dat-lich-hen-coaching/">Đặt lịch hẹn</a>';
+                if ($in_subscription['subscriber_list_id']==13):
+                    $response->message='Cảm ơn bạn đã tin tưởng Life Coaching Vietnam. Bạn có muốn đặt lịch hẹn để nhận 1 buổi coaching miễn phí ngay hôm nay? <a href="http://lifecoach.com.vn/dat-lich-hen-coaching/">Đặt lịch hẹn</a>';
+                else:
+                    $response->message='Thông tin đăng ký của bạn đã gửi thành công. Life Coaching Vietnam sẽ liên hệ xác nhận trong vòng 48 tiếng đồng hồ.';
+                endif;
                 $response->json();
             }
             else

@@ -38,7 +38,7 @@
         $alert.children(".error-response").html(textResponse);
         $alert.fadeIn("slow");
         return $.scrollTo($alert, 800, {
-          offset: -50
+          offset: -200
         });
       }).always(function() {
         return submitBtn.bootstrapBtn("reset");
@@ -71,11 +71,6 @@
       $form = $(e.target);
       return CEMSAjaxCall($form.find('[type=submit]:not(.bv-hidden-submit)'), "register_new_event_action", $form, '#cems-alert');
     });
-    $("#customer-birthday").datepicker({
-      autoclose: "true"
-    }).on("changeDate show", function(e) {
-      return $(this).closest("form").bootstrapValidator("revalidateField", "customer[birthday]");
-    });
     $(".btn-check-exist").click(function() {
       var $form, bootstrapValidator;
       $form = $(this).closest('form');
@@ -95,16 +90,11 @@
       $form.find('input').prop('readOnly', false);
       return $form.data('bootstrapValidator').resetForm(true);
     });
-    $(".subscriptionForm").bootstrapValidator().on('success.form.bv', function(e) {
+    return $(".subscriptionForm").bootstrapValidator().on('success.form.bv', function(e) {
       var $form;
       e.preventDefault();
       $form = $(e.target);
       return CEMSAjaxCall($form.find('[type=submit]:not(.bv-hidden-submit)'), "new_subscription_action", $form, '.cems-alert');
-    });
-    return $("input[name$='birthday']").datepicker({
-      autoclose: "true"
-    }).on("changeDate show", function(e) {
-      return $(this).closest("form").bootstrapValidator("revalidateField", "customer[birthday]");
     });
   });
 

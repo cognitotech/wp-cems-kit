@@ -82,7 +82,7 @@ class CEMSSubscribeForm14 {
                                data-bv-emailaddress-message="Email không hợp lệ">
                     </div>
                     <div class="col-xs-2">
-                        <button type="button" class="btn btn-default btn-block btn-check-exist" data-loading-text="Xin chờ ..." data-toggle="tooltip" data-placement="bottom" title="Nếu bạn đã từng đăng ký với chúng tôi, bạn chỉ cần điền email, những thông tin khác sẽ được tự động điền giúp bạn.">Kiểm tra</button>
+                        <button type="button" class="btn btn-warning btn-block btn-check-exist" data-loading-text="Xin chờ ..." data-toggle="tooltip" data-placement="bottom" title="Nếu bạn đã từng đăng ký với chúng tôi, bạn chỉ cần điền email, những thông tin khác sẽ được tự động điền giúp bạn.">Kiểm tra</button>
                     </div>
                 </div>
             </div>

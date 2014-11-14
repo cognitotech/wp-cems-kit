@@ -54,20 +54,11 @@ jQuery(document).ready ($) ->
               return false unless m.isValid()
               age = moment().diff(m, 'years')
               age >= 10
-
   )
   $("#event17-form").bootstrapValidator().on 'success.form.bv', (e) ->
-
     e.preventDefault()
     $form = $(e.target)
     CEMSAjaxCall $form.find('[type=submit]:not(.bv-hidden-submit)'), "register_new_event_action", $form, '#cems-alert'
-
-  #birthday validation
-  $("#customer-birthday").datepicker(
-    autoclose:"true"
-  ).on "changeDate show", (e) ->
-    # Revalidate the date when user change it
-    $(this).closest("form").bootstrapValidator "revalidateField", "customer[birthday]"
 
   $(".btn-check-exist").click ->
     $form = $(this).closest('form')
@@ -90,10 +81,3 @@ jQuery(document).ready ($) ->
     e.preventDefault()
     $form = $(e.target)
     CEMSAjaxCall $form.find('[type=submit]:not(.bv-hidden-submit)'), "new_subscription_action", $form, '.cems-alert'
-
-  #birthday validation
-  $("input[name$='birthday']").datepicker(
-    autoclose:"true"
-  ).on "changeDate show", (e) ->
-    # Revalidate the date when user change it
-    $(this).closest("form").bootstrapValidator "revalidateField", "customer[birthday]"
