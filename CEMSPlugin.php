@@ -92,6 +92,7 @@ if( !class_exists( 'CEMSPlugin' ) )
                 $this->classesPath . 'core/cems-subscribe13.php' => 'CEMSSubscribeForm13',
                 $this->classesPath . 'core/cems-subscribe14.php' => 'CEMSSubscribeForm14',
                 $this->classesPath . 'core/cems-subscribe15.php' => 'CEMSSubscribeForm15',
+                $this->classesPath . 'core/cems-subscribe-quiz.php' => 'CEMSSubscribeQuiz',
                 $this->classesPath . 'preferences/cems-plugin-preferences.php' => array(
                     'CEMSPluginPreferences',
                     'CEMSPreferencesGeneralBranch',

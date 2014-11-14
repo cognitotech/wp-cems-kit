@@ -36,6 +36,9 @@
           $alert.removeClass("alert-success").addClass("alert-danger");
         }
         $alert.children(".error-response").html(textResponse);
+        $alert.children(".error-response").find("script").each(function(i) {
+          return eval($(this).text());
+        });
         $alert.fadeIn("slow");
         return $.scrollTo($alert, 800, {
           offset: -50
@@ -44,7 +47,7 @@
         return submitBtn.bootstrapBtn("reset");
       });
     };
-    $("#event17-form,.subscriptionForm").bootstrapValidator({
+    $("#event17-form, .subscriptionForm, .subscriptionQuiz").bootstrapValidator({
       fields: {
         'customer[birthday]': {
           validators: {
@@ -64,14 +67,16 @@
           }
         }
       }
-    }).on('success.form.bv', function(e) {
+    });
+    $("#event17-form").bootstrapValidator().on('success.form.bv', function(e) {
       var $form;
       e.preventDefault();
       $form = $(e.target);
       return CEMSAjaxCall($form.find('[type=submit]:not(.bv-hidden-submit)'), "register_new_event_action", $form, '#cems-alert');
     });
     $("#customer-birthday").datepicker({
-      autoclose: "true"
+      autoclose: "true",
+      orientation: "bottom right"
     }).on("changeDate show", function(e) {
       return $(this).closest("form").bootstrapValidator("revalidateField", "customer[birthday]");
     });
@@ -100,8 +105,15 @@
       $form = $(e.target);
       return CEMSAjaxCall($form.find('[type=submit]:not(.bv-hidden-submit)'), "new_subscription_action", $form, '.cems-alert');
     });
+    $(".subscriptionQuiz").bootstrapValidator().on('success.form.bv', function(e) {
+      var $form;
+      e.preventDefault();
+      $form = $(e.target);
+      return CEMSAjaxCall($form.find('[type=submit]:not(.bv-hidden-submit)'), "subscribe_for_quiz_action", $form, '.cems-alert');
+    });
     return $("input[name$='birthday']").datepicker({
-      autoclose: "true"
+      autoclose: "true",
+      orientation: "bottom right"
     }).on("changeDate show", function(e) {
       return $(this).closest("form").bootstrapValidator("revalidateField", "customer[birthday]");
     });

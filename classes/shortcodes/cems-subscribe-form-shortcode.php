@@ -80,6 +80,7 @@ class CEMSSubscribeFormShortcode extends WPDKShortcode {
         $defaults = array(
             'id' => -1,
             'theme' => 'CEMSSubscribeForm13',
+            'quiz' => ''
         );
 
         $attributes = shortcode_atts( $defaults, $attributes, 'cems_subscribe' );

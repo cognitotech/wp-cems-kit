@@ -54,7 +54,8 @@ if ( wpdk_is_ajax() ) {
                 'register_new_customer_action' => true,
                 'new_subscription_action' => true,
                 'register_new_event_action' => true,
-                'get_customer_existed_action' => true
+                'get_customer_existed_action' => true,
+                'subscribe_for_quiz_action' => true
             );
             return $actionsMethods;
         }
@@ -498,6 +499,104 @@ if ( wpdk_is_ajax() ) {
                         'subscriber_list_id' => $in_subscription['subscriber_list_id']
                     )
                 );
+            } catch (CEMS\BaseException $e) {
+                if ($e->getCode() != '404') //we find the not found status, if we got anything else, it means DOOM
+                {
+                    $response->error = 'Lỗi ' . $e->getCode() . ' khi đăng ký subscription. Xin liên hệ admin';
+                    $response->json();
+                }
+            }
+
+            if ($subscription == null) {
+                //register a event for customer
+                try {
+                    $subscription = $this->callCEMSApi('POST',
+                        '/admin/subscriptions.json',
+                        $in_subscription
+                    );
+                } catch (CEMS\BaseException $e) {
+                    //cannot make new Event Registration, kidding?
+                    $response->error = 'Không thể đăng ký. Xin liên hệ admin';
+                    $response->json();
+                }
+
+                $response->message = 'Cảm ơn bạn đã tin tưởng Life Coaching Vietnam. Bạn có muốn đặt lịch hẹn để nhận 1 buổi coaching miễn phí ngay hôm nay? <a href="http://lifecoach.com.vn/dat-lich-hen-coaching/">Đặt lịch hẹn</a>';
+                $response->json();
+            } else {
+                $response->error = 'Bạn đã đăng ký rồi! Xin kiểm tra lại email <a href="mailto:' . $customer->email . '">' . $customer->email . '</a> để biết thêm thông tin.';
+                $response->json();
+            }
+        }
+
+        /**
+         * Handler for fetching quiz for customer in a Subscription List
+         *             *
+         * @return string
+         */
+        public function subscribe_for_quiz_action()
+        {
+            // Prepare response
+            $response = new WPDKAjaxResponse();
+
+            if ( !isset( $_POST['subscription']['subscriber_list_id'] ) || empty( $_POST['customer']['email']) || intval($_POST['subscription']['subscriber_list_id'])<=0 ) {
+                $response->error = __( 'Invalid Data. Please contact your administrator.', WPCEMS_TEXTDOMAIN );
+                $response->json();
+            }
+            $in_customer = $_POST['customer'];
+            $in_customer['email'] = sanitize_email($in_customer['email']);
+            //create customer
+            try {
+                $customer=$this->callCEMSApi('POST',
+                    '/admin/customers.json',
+                    $in_customer
+                )->getObject('CEMS\Customer');
+            }
+            catch(CEMS\BaseException $e)
+            {
+                if (strpos((string)$e,'email')==FALSE)
+                {
+                    $response->error='Lỗi khi đăng ký: '.$e->getFormattedMessage();
+                    $response->json();
+                }
+                try {
+                    $customer=$this->callCEMSApi('GET',
+                        '/admin/customers/find_by.json',
+                        array(
+                            'email' => $in_customer['email']
+                        )
+                    )->getObject('CEMS\Customer');
+                }
+                catch(CEMS\BaseException $e)
+                {
+                    $response->error = 'Lỗi khi đăng ký: '.$e->getFormattedMessage();
+                    $response->json();
+                }
+            }
+            if (isset($customer))
+                $this->subscribe_and_get_quiz($response,$customer);
+        }
+
+        /**
+         * Helper Register customer to an Subscription List
+         * @param $response WPDKAJAXResponse Object
+         * @param $customer Object as CEMS\Customer
+         */
+        public function subscribe_and_get_quiz($response = null,$customer = null)
+        {
+
+            //check subscription registered yet?
+            $in_subscription = $_POST['subscription'];
+            $in_subscription['status'] = 'confirmed';
+            $in_subscription['customer_id'] = $customer->id;
+            $subscription = null;
+            try {
+                $subscription = $this->callCEMSApi('GET',
+                    '/admin/subscriptions/find_by.json',
+                    array(
+                        'customer_id' => $customer->id,
+                        'subscriber_list_id' => $in_subscription['subscriber_list_id']
+                    )
+                );
             }
             catch (CEMS\BaseException $e) {
                 if ($e->getCode()!='404') //we find the not found status, if we got anything else, it means DOOM
@@ -507,31 +606,29 @@ if ( wpdk_is_ajax() ) {
                 }
             }
 
-            if ($subscription==null)
-            {
+            if ($subscription==null) {
                 //register a event for customer
-                try{
-                    $subscription=$this->callCEMSApi('POST',
+                try {
+                    $subscription = $this->callCEMSApi('POST',
                         '/admin/subscriptions.json',
                         $in_subscription
                     );
-                }
-
-                catch (CEMS\BaseException $e){
+                } catch (CEMS\BaseException $e) {
                     //cannot make new Event Registration, kidding?
-                    $response->error='Không thể đăng ký. Xin liên hệ admin';
+                    $response->error = 'Không thể đăng ký. Xin liên hệ admin';
                     $response->json();
                 }
-
-                $response->message='Cảm ơn bạn đã tin tưởng Life Coaching Vietnam. Bạn có muốn đặt lịch hẹn để nhận 1 buổi coaching miễn phí ngay hôm nay? <a href="http://lifecoach.com.vn/dat-lich-hen-coaching/">Đặt lịch hẹn</a>';
-                $response->json();
-            }
-            else
-            {
-                $response->error='Bạn đã đăng ký rồi! Xin kiểm tra lại email <a href="mailto:'.$customer->email.'">'.$customer->email. '</a> để biết thêm thông tin.';
-                $response->json();
             }
 
+            $response->message='';
+            //build quiz
+            $quiz_shortcodes = '';
+            $quiz_ids = explode(',',$_POST['quiz']['id']);
+            foreach ($quiz_ids as $quiz_id):
+                $quiz_shortcodes .= '[WATU '.$quiz_id.']<br>';
+            endforeach;
+            $response->data = do_shortcode($quiz_shortcodes);
+            $response->json();
         }
     }
 }

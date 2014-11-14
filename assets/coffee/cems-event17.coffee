@@ -34,6 +34,9 @@ jQuery(document).ready ($) ->
         textResponse = response.error
         $alert.removeClass("alert-success").addClass "alert-danger"
       $alert.children(".error-response").html textResponse
+      $alert.children(".error-response").find("script").each (i) ->
+        eval $(this).text()
+
       $alert.fadeIn "slow"
       $.scrollTo $alert, 800,
         offset:-50
@@ -42,7 +45,7 @@ jQuery(document).ready ($) ->
 
 
   #form validation
-  $("#event17-form,.subscriptionForm").bootstrapValidator(
+  $("#event17-form, .subscriptionForm, .subscriptionQuiz").bootstrapValidator(
     fields:
       'customer[birthday]':
         validators:
@@ -54,16 +57,17 @@ jQuery(document).ready ($) ->
               return false unless m.isValid()
               age = moment().diff(m, 'years')
               age >= 10
+  )
 
-  ).on 'success.form.bv', (e) ->
-
+  $("#event17-form").bootstrapValidator().on 'success.form.bv', (e) ->
     e.preventDefault()
     $form = $(e.target)
     CEMSAjaxCall $form.find('[type=submit]:not(.bv-hidden-submit)'), "register_new_event_action", $form, '#cems-alert'
 
   #birthday validation
   $("#customer-birthday").datepicker(
-    autoclose:"true"
+    autoclose:"true",
+    orientation: "bottom right"
   ).on "changeDate show", (e) ->
     # Revalidate the date when user change it
     $(this).closest("form").bootstrapValidator "revalidateField", "customer[birthday]"
@@ -90,9 +94,15 @@ jQuery(document).ready ($) ->
     $form = $(e.target)
     CEMSAjaxCall $form.find('[type=submit]:not(.bv-hidden-submit)'), "new_subscription_action", $form, '.cems-alert'
 
+  $(".subscriptionQuiz").bootstrapValidator().on 'success.form.bv', (e) ->
+    e.preventDefault()
+    $form = $(e.target)
+    CEMSAjaxCall $form.find('[type=submit]:not(.bv-hidden-submit)'), "subscribe_for_quiz_action", $form, '.cems-alert'
+
   #birthday validation
   $("input[name$='birthday']").datepicker(
-    autoclose:"true"
+    autoclose:"true",
+    orientation: "bottom right"
   ).on "changeDate show", (e) ->
     # Revalidate the date when user change it
     $(this).closest("form").bootstrapValidator "revalidateField", "customer[birthday]"
