@@ -72,7 +72,7 @@ class CEMSSubscribeForm14 {
 
             <div class="form-group">
                 <label for="customer-email" class="control-label"><?php echo __('
-Địa chỉ email',WPCEMS_TEXTDOMAIN);?> <sup>*</sup></label>
+Địa chỉ email',WPCEMS_TEXTDOMAIN);?> <sup>*</sup> (Bạn nhớ click Kiểm tra trước khi điền Họ tên)</label>
                 <div class="row">
                     <div class="col-xs-10">
                         <input type="email" class="form-control" id="customer-email" name="customer[email]" placeholder="<?php echo __('Nhập địa chỉ email của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
@@ -122,7 +122,7 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?> <sup>*</sup></label>
 
 
             <div class="form-group">
-                <label for="customer-birthday" class="control-label">Sinh nhật <sup>*</sup></label>
+                <label for="customer-birthday" class="control-label">Sinh nhật <sup>*</sup> (Sử dụng dấu cách "-": 20-10-1980)</label>
                 <input type="text" class="form-control" id="customer-birthday" name="customer[birthday]" placeholder="DD-MM-YYYY"
                        data-bv-date="true"
                        data-bv-notempty="true"
@@ -161,7 +161,7 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?> <sup>*</sup></label>
 
 
             <div class="form-group">
-                <label for="subscription-booking_date" class="control-label">Chọn ngày bạn muốn gặp. Life Coaching Vietnam sẽ gọi điện xác nhận trong vòng 24 tiếng.</label>
+                <label for="subscription-booking_date" class="control-label">Chọn ngày bạn muốn gặp. Life Coaching Vietnam sẽ gọi điện xác nhận trong vòng 24 tiếng. Sử dụng dấu cách ( - ): 20-10-1980</label>
                 <input type="text" class="form-control" id="subscription-booking_date" name="subscription[booking_date]" placeholder="DD-MM-YYYY"
                        data-bv-date="true"
                        data-bv-date-format="DD-MM-YYYY"

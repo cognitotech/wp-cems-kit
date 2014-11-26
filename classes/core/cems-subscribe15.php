@@ -74,7 +74,7 @@ class CEMSSubscribeForm15 {
 
                     <div class="form-group">
                         <label for="customer-email" class="control-label"><?php echo __('
-Địa chỉ email',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
+Địa chỉ email',WPCEMS_TEXTDOMAIN);?><sup>*</sup><br>Bạn nhớ click Kiểm tra trước khi điền Họ tên</label>
                         <div class="row">
                             <div class="col-xs-9">
                             <input type="email" class="form-control" id="customer-email" name="customer[email]" placeholder="<?php echo __('Nhập địa chỉ email của bạn',WPCEMS_TEXTDOMAIN);?>" data-bv-notempty="true"
@@ -119,7 +119,7 @@ Số điện thoại',WPCEMS_TEXTDOMAIN);?><sup>*</sup></label>
                     </div>
 
                     <div class="form-group">
-                        <label for="customer-birthday" class="control-label">Sinh nhật</label>
+                        <label for="customer-birthday" class="control-label">Sinh nhật<br>Sử dụng dấu cách ( - ): 20-10-1980</label>
                         <input type="text" class="form-control" id="customer-birthday" name="customer[birthday]" placeholder="DD-MM-YYYY"
                                data-bv-date="true"
                                data-bv-date-format="DD-MM-YYYY"
