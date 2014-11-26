@@ -70,6 +70,8 @@
             } else {
               result = referrer.split('/')[2];
             }
+          } else {
+            result = document.location;
           }
         }
       }

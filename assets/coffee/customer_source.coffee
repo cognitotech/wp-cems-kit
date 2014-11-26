@@ -58,6 +58,8 @@ jQuery(document).ready ($) ->
             result = window.capitalizeValue(utm_source)
           else
             result = referrer.split('/')[2]
+        else
+          result = document.location
 
   $("input[name$='[customer_source]']").val result
   return
