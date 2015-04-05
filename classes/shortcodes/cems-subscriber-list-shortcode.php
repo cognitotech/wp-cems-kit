@@ -52,6 +52,12 @@ class CEMSSubscriberListShortcode extends WPDKShortcode {
 		);
 		return $shortcodes;
 	}
+	
+	function unicode_escape_sequences($original_string){
+		$replacedString = preg_replace("/\\\\u([0-9abcdef]{4})/", "&#x$1;", $original_string);
+		$unicodeString = mb_convert_encoding($replacedString, 'UTF-8', 'HTML-ENTITIES');
+		return $unicodeString;
+	}
 
 	/**
 	 * Display the preview button with its full function
@@ -86,6 +92,9 @@ class CEMSSubscriberListShortcode extends WPDKShortcode {
 			$table_name = CEMSDatabase::get_table_custom_msg_name();
 			$sql_str = "SELECT custom_key, custom_msg FROM `{$table_name}` WHERE list_id = {$list_id}";
 			$arr_custom_msg = $wpdb->get_results($sql_str, ARRAY_A);
+			$json_custom_msg = json_encode($arr_custom_msg,JSON_UNESCAPED_UNICODE);
+			if ($json_custom_msg == NULL) // do some thing else if is old version php
+				$json_custom_msg = $this->unicode_escape_sequences( json_encode($arr_custom_msg) );
 			
 			if ( strlen( $subscriber_form[0]['custom_css'] ) > 0 ) //get & decode custom css
 				$content .= '<style type="text/css">' ."\r\n" . stripslashes_deep(unserialize( base64_decode( $subscriber_form[0]['custom_css'] ) )) ."\r\n". '</style>'."\r\n";
@@ -94,8 +103,9 @@ class CEMSSubscriberListShortcode extends WPDKShortcode {
 			$content .= stripslashes_deep( html_entity_decode( esc_js( $subscriber_form[0]['html_code'] ) ) ); //get & decode special char
 			$content .= "\r\n".'</div>';
 			
-			if ( strlen( $subscriber_form[0]['custom_script'] ) > 0 )//get & decode custom script
-				$content .= "\r\n".'<script>'. "\r\n" .'form'. $list_id .'='. json_encode($arr_custom_msg,JSON_UNESCAPED_UNICODE) . "\r\n" .'</script>';
+			if (count($arr_custom_msg) > 0 && strlen($json_custom_msg) > 0)
+				$content .= "\r\n".'<script>'. "\r\n" .'form'. $list_id .'='. $json_custom_msg . ";\r\n" .'</script>';
+			if ( strlen( $subscriber_form[0]['custom_script'] ) > 0 && strlen(stripslashes_deep(unserialize( base64_decode( $subscriber_form[0]['custom_script'] ) ))) > 0 )//get & decode custom script
 				$content .= "\r\n".'<script>'."\r\n". stripslashes_deep(unserialize( base64_decode( $subscriber_form[0]['custom_script'] ) )) . "\r\n". '</script>';
 		}
 		

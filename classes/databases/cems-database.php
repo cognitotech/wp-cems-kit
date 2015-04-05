@@ -49,23 +49,12 @@ class CEMSDatabase {
 	 * @return int version of database
 	 */
 	public static function init_database(){
-		(new CEMSDatabase())->create_or_update_database();
-	}
-
-	/**
-	 * @return int version of database
-	 */
-	function get_version(){return $this->version;}
-
-	/**
-	 * @return none
-	 */
-	private function create_or_update_database(){
 		global $wpdb;
 		////
 		// frist do create database if not exists
 		////
-		$sql_str = "CREATE TABLE IF NOT EXISTS `{$this->table_subscribers}` ( "
+		
+		$sql_str = "CREATE TABLE IF NOT EXISTS `". self::get_table_subscribers_name() ."` ( "
 					. "`list_id` INT UNSIGNED NOT NULL, "
 					. "`list_name` VARCHAR(200) NOT NULL, "
 					. "`html_code` TEXT NULL DEFAULT NULL, "
@@ -75,7 +64,7 @@ class CEMSDatabase {
 					. ")".$wpdb->get_charset_collate();
 		$wpdb->query( $sql_str ); $wpdb->flush();
 		
-		$sql_str = "CREATE TABLE IF NOT EXISTS `{$this->table_custom_msg}`( "
+		$sql_str = "CREATE TABLE IF NOT EXISTS `". self::get_table_custom_msg_name() ."`( "
 					. "`list_id` INT UNSIGNED NOT NULL, "
 					. "`custom_key` NVARCHAR(30) NOT NULL, "
 					. "`custom_msg` TEXT NULL DEFAULT NULL, "
@@ -88,4 +77,8 @@ class CEMSDatabase {
 		////
 	}
 
+	/**
+	 * @return int version of database
+	 */
+	function get_version(){return $this->version;}
 }

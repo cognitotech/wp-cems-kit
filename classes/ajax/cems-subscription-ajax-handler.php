@@ -170,13 +170,14 @@ if ( wpdk_is_ajax() ) {
 		 * @param int $listId : subscriber list id
 		 * @param int $customer_id : customer id
 		 */
-		protected function subscribe_a_list( &$response = null, $listId = -1, $customer_id = -1 ) {
+		protected function subscribe_a_list( &$response = null, $listId = -1, $customer_id = -1, $customer_source = '' ) {
 			$subscription = null;
 
 			try {
 				$subscription = $this->callCEMSApi( 'POST', '/admin/subscriptions.json', array(
 					'customer_id' => $customer_id,
 					'subscriber_list_id' => $listId,
+					'customer_source' => $customer_source,
 					'status' => 'confirmed' // tell CEMS server not require user to confirm their emails
 						)
 				);
@@ -224,7 +225,7 @@ if ( wpdk_is_ajax() ) {
 					$this->update_customer( $response, $_POST['subscription']['customer_attributes'], $customer->id );
 
 					//register a subscription for customer
-					$this->subscribe_a_list( $response, $listId, $customer->id );
+					$this->subscribe_a_list( $response, $listId, $customer->id, $_POST['subscription']['customer_source'] );
 
 					//set message if success
 					if ( strlen( trim( $response->error . "" ) ) < 0 ){
