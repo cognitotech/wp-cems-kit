@@ -2,7 +2,7 @@
 
 /**
  * Plugin Name: Wordpress CEMS Kit
- * Plugin URI: http://siliconstraits.vn
+ * Plugin URI: https://github.com/quocvietssf/wp-cems-kit.git
  * Description: Wordpress CEMS Kit plugin with full WPDK support
  * Version: 1.1.0
  * Author: Hai Phan Nguyen - Viet Trinh
