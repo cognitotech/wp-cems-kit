@@ -80,8 +80,8 @@ class CEMSPluginPreferences extends WPDKPreferences
     public function defaults()
     {
         $this->general = new CEMSPreferencesGeneralBranch(  );
-        $this->layout = new CEMSPreferencesLayoutBranch(  );
-        $this->error_messages = new CEMSPreferencesCustomErrorsBranch ( );
+        //$this->layout = new CEMSPreferencesLayoutBranch(  );
+        //$this->error_messages = new CEMSPreferencesCustomErrorsBranch ( );
     }
 
 }
@@ -117,7 +117,7 @@ class CEMSPreferencesGeneralBranch extends WPDKPreferencesBranch
     public function defaults()
     {
         // Se the default for the first time or reset preferences
-        $this->api_url = 'http://v3.cems.vn';
+        $this->api_url = '';
         $this->api_token = '';
     }
 

@@ -27,3 +27,6 @@ define( 'WPCEMS_URL_ASSETS', $this->assetsURL );
 define( 'WPCEMS_URL_CSS', $this->cssURL );
 define( 'WPCEMS_URL_JAVASCRIPT', $this->javascriptURL );
 define( 'WPCEMS_URL_IMAGES', $this->imagesURL );
+
+
+/**/

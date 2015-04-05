@@ -40,14 +40,14 @@ class CEMSPluginPreferencesViewController extends WPDKPreferencesViewController
 
         // Single instances of tab content
         $general_view = new CEMSPreferencesGeneralView();
-        $layout_view = new CEMSPreferencesLayoutView();
-        $errors_view = new CEMSPreferencesCustomErrorsView();
+        //$layout_view = new CEMSPreferencesLayoutView();
+        //$errors_view = new CEMSPreferencesCustomErrorsView();
 
         // Create each single tab
         $tabs = array(
             new WPDKjQueryTab($general_view->id, __('Genral Settings',WPCEMS_TEXTDOMAIN), $general_view->html()),
-            new WPDKjQueryTab($errors_view->id, __('Custom Error Messages',WPCEMS_TEXTDOMAIN), $errors_view->html()),
-            new WPDKjQueryTab($layout_view->id, __('Custom CSS Layout',WPCEMS_TEXTDOMAIN), $layout_view->html())
+            //new WPDKjQueryTab($errors_view->id, __('Custom Error Messages',WPCEMS_TEXTDOMAIN), $errors_view->html()),
+            //new WPDKjQueryTab($layout_view->id, __('Custom CSS Layout',WPCEMS_TEXTDOMAIN), $layout_view->html())
         );
 
         parent::__construct(CEMSPluginPreferences::init(), __('Preferences',WPCEMS_TEXTDOMAIN), $tabs);

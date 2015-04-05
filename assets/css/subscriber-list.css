@@ -1,0 +1,84 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 29, 2015, 11:36:07 AM
+    Author     : Viet Trinh
+*/
+#wpdk_preferences_view_form-create_subscriber_form textarea,
+#wpdk_preferences_view_form-edit_subscriber_form textarea {
+  margin: 0 !important;
+}
+@media (min-width: 1320px) {
+  #wpdk_preferences_view_form-create_subscriber_form textarea,
+  #wpdk_preferences_view_form-edit_subscriber_form textarea {
+    width: 900px !important;
+  }
+}
+@media (min-width: 1200px) and (max-width: 1319px) {
+  #wpdk_preferences_view_form-create_subscriber_form textarea,
+  #wpdk_preferences_view_form-edit_subscriber_form textarea {
+    width: 780px !important;
+  }
+}
+@media (min-width: 1000px) and (max-width: 1199px) {
+  #wpdk_preferences_view_form-create_subscriber_form textarea,
+  #wpdk_preferences_view_form-edit_subscriber_form textarea {
+    width: 580px !important;
+  }
+}
+@media (max-width: 999px) {
+  #wpdk_preferences_view_form-create_subscriber_form textarea,
+  #wpdk_preferences_view_form-edit_subscriber_form textarea {
+    width: 100% !important;
+  }
+}
+@media (max-width: 999px) {
+  #wpdk_preferences_view_form-create_subscriber_form label,
+  #wpdk_preferences_view_form-edit_subscriber_form label {
+    font-weight: bold;
+    text-align: left !important;
+  }
+}
+#wpdk_preferences_view_form-create_subscriber_form #check_edit_html_code,
+#wpdk_preferences_view_form-edit_subscriber_form #check_edit_html_code,
+#wpdk_preferences_view_form-create_subscriber_form #check_new_html_code,
+#wpdk_preferences_view_form-edit_subscriber_form #check_new_html_code {
+  display: inline-block;
+}
+@media (min-width: 1000px) {
+  #wpdk_preferences_view_form-create_subscriber_form #check_edit_html_code,
+  #wpdk_preferences_view_form-edit_subscriber_form #check_edit_html_code,
+  #wpdk_preferences_view_form-create_subscriber_form #check_new_html_code,
+  #wpdk_preferences_view_form-edit_subscriber_form #check_new_html_code {
+    margin-left: 155px !important;
+  }
+}
+@media (max-width: 999px) {
+  #wpdk_preferences_view_form-create_subscriber_form #check_edit_html_code,
+  #wpdk_preferences_view_form-edit_subscriber_form #check_edit_html_code,
+  #wpdk_preferences_view_form-create_subscriber_form #check_new_html_code,
+  #wpdk_preferences_view_form-edit_subscriber_form #check_new_html_code {
+    margin-left: 0 !important;
+  }
+}
+#wpdk_preferences_view_form-create_subscriber_form #check_new_html_code_text,
+#wpdk_preferences_view_form-edit_subscriber_form #check_new_html_code_text,
+#wpdk_preferences_view_form-create_subscriber_form #check_edit_html_code_text,
+#wpdk_preferences_view_form-edit_subscriber_form #check_edit_html_code_text {
+  display: inline-block;
+  margin: 0 15px;
+  color: #d20b0b;
+  font-weight: bold;
+  padding: 5px 0;
+}
+@media (max-width: 999px) {
+  #wpdk_preferences_view_form-create_subscriber_form input[type="text"],
+  #wpdk_preferences_view_form-edit_subscriber_form input[type="text"],
+  #wpdk_preferences_view_form-create_subscriber_form input[type="number"],
+  #wpdk_preferences_view_form-edit_subscriber_form input[type="number"] {
+    width: 100% !important;
+  }
+}
