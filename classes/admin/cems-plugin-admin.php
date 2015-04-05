@@ -99,6 +99,15 @@ class CEMSPluginAdmin extends WPDKWordPressAdmin {
                         'capability'     => self::MENU_CAPABILITY,
                         'viewController' => 'CEMSPluginPreferencesViewController', // Function called whenever this menu item is clicked
                     ),
+                    
+                    array(
+                        'menuTitle'      => __( 'Subscriber List',WPCEMS_TEXTDOMAIN ), // Menu item shown as first sub-menu in main navigation menu
+                        'pageTitle'      => __( 'CEMS Subscriber List',WPCEMS_TEXTDOMAIN ),  // The web page title shown when this item is clicked
+
+                        // WordPress capability needed to see this menu item - if current WordPress user does not have this capability, this menu item will be hidden
+                        'capability'     => self::MENU_CAPABILITY,
+                        'viewController' => 'CEMSSubscriberListViewController', // Function called whenever this menu item is clicked
+                    ),
 
                     // Add a divider to separate the first sub-menu item from the second
                     WPDKSubMenuDivider::DIVIDER,

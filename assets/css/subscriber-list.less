@@ -1,0 +1,59 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : Mar 29, 2015, 11:36:07 AM
+    Author     : Viet Trinh
+*/
+
+#wpdk_preferences_view_form-create_subscriber_form,
+#wpdk_preferences_view_form-edit_subscriber_form {
+    textarea{
+        margin: 0 !important;
+        @media(min-width:1320px){
+            width: 900px !important;
+        }
+        @media(min-width:1200px) and (max-width:1319px){
+            width: 780px !important;
+        }
+        @media(min-width:1000px) and (max-width:1199px){
+            width: 580px !important;
+        }
+        @media(max-width:999px){
+            width: 100% !important;
+        }
+    }
+    label{
+        @media(max-width:999px){
+            font-weight: bold;
+            text-align: left !important;
+        }
+    }
+    #check_edit_html_code,
+    #check_new_html_code {
+        display: inline-block;
+        
+        @media(min-width:1000px){
+            margin-left: 155px !important;
+        }
+        @media(max-width:999px){
+            margin-left:0 !important;
+        }
+    }
+    #check_new_html_code_text,
+    #check_edit_html_code_text {
+        display: inline-block;
+        margin: 0 15px;
+        color: #d20b0b;
+        font-weight: bold;
+        padding: 5px 0;
+    }
+    
+    input[type="text"],input[type="number"]{
+        @media(max-width:999px){
+            width: 100% !important;
+        }
+    }
+}
